@@ -317,10 +317,10 @@ public class Check {
      */
     private boolean isContact(Box upperBox, Box lowerBox) {
         return (abs(upperBox.getZ1() - lowerBox.getZ2()) < Config.CONTACT_ERROR
-                && lowerBox.getX2() > upperBox.getX1() + Config.OVERLAP_ERROR
-                && upperBox.getX2() > lowerBox.getX1() + Config.OVERLAP_ERROR
-                && lowerBox.getY2() > upperBox.getY1() + Config.OVERLAP_ERROR
-                && upperBox.getY2() > lowerBox.getY1() + Config.OVERLAP_ERROR);
+                && lowerBox.getX2() > upperBox.getX1()
+                && upperBox.getX2() > lowerBox.getX1()
+                && lowerBox.getY2() > upperBox.getY1()
+                && upperBox.getY2() > lowerBox.getY1());
     }
 
     /**
