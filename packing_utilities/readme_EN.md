@@ -91,9 +91,9 @@ Note: if the online access is not available, you need to download them from thei
 | :-----| :----| :----|:---- |:---- |
 | estimateCode |  |  | String | Identification of the input files. |
 | algorithmBaseParamDto | | | Object| Basic data |
-| | platformDtoList | | Array | Platform info. |
+| | platformDtoList | | Array | Platform (i.e., pick-up point) info. |
 | | | platformCode | String | Identification of the platform. |
-| | | isMustFirst | Boolean | Whether the platform  should be first visited (bonded warehouse). |
+| | | isMustFirst | Boolean | Whether the platform should be first visited (bonded warehouse). |
 | | truckTypeDtoList | | Array | Truck info. |
 | | | truckTypeId | String | Identification of the truck. |
 | | | truckTypeCode | String | Unique truck code. |
@@ -104,7 +104,7 @@ Note: if the online access is not available, you need to download them from thei
 | | | maxLoad | Float | Carrying capacity of the truck (kg) |
 | | truckTypeMap |  | Object | Map format of truckTypeDtoList, key is truckTypeId |
 | | distanceMap	 |  | Object | Key is two platform codes connected by “+”: e.g. “platform01+platform02”; Value is the float value of the distance (m) between them. |
-| boxes	|  |  | Array | Boxes info. |
+| boxes	|  |  | Array | Boxes (i.e., items) info. |
 | | spuBoxId |  | String | Identification of the box. |
 | | platformCode |  | String | Code of the platform the box is belonging to. |
 | | length | | Float | Box length (mm). |
@@ -118,7 +118,7 @@ Note: if the online access is not available, you need to download them from thei
 | key | key | key | value format | description |
 | :-----| :----| :----|:---- |:---- |
 | estimateCode | | | String | Identification of the output file. Same as the input file.|
-| truckArray | | | Array | Array of trucks.|
+| solutionArray | | | 2D-Array | Array of solutions. Each line is a solution, i.e. an array of trucks. Each element is a truck map.|
 | | truckTypeId | | String | Identification of the truck. Same as the input file.|
 | | truckTypeCode | |String | Truck code. Same as the input file.|
 | | piece | |Integer | Number of boxes packed in this truck.|

@@ -32,9 +32,8 @@ import static java.lang.Math.*;
 
 
 public class Check {
-    private ArrayList<String> errorMessages = new ArrayList<>();
-    private Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck;
-    private Map<Integer, Bin> allBins;
+    private Map<Integer, ArrayList<String>> errorMessages = new HashMap<>();
+    private ArrayList<Solution> solutions;
     private ArrayList<Box> inputBoxes;
     private Route route;
 
@@ -82,8 +81,7 @@ public class Check {
         }
         // check all the html files for a solution.
         if (inputFile.isDirectory()) {
-            this.allBoxesInTruck = dataImporting.genAllBoxesInTruck(outputPath);
-            this.allBins = dataImporting.genAllBins(outputPath);
+            this.solutions = dataImporting.genAllSolutions(outputPath);
             this.inputBoxes = dataImporting.genInputBoxes();
             this.route = dataImporting.genRoute();
         }
@@ -98,10 +96,22 @@ public class Check {
      */
     public boolean check() {
         boolean pass = true;
-        if (!checkInput()) {
+        for (Solution solution: this.solutions) {
+            pass = checkSingleSolution(solution);
+        }
+        return pass;
+    }
+
+    /**
+     * Check one solution.
+     * @return true: passed; false: unpassed.
+     */
+    public boolean checkSingleSolution(Solution solution) {
+        boolean pass = true;
+        if (!checkInput(solution)) {
             pass = false;
         }
-        if (!this.allBins.isEmpty() && !checkTruck()) {
+        if (!solution.getAllBins().isEmpty() && !checkTruck(solution)) {
             pass = false;
         }
         return pass;
@@ -112,11 +122,13 @@ public class Check {
      * @return true: passed; false: unpassed.
      */
     @SuppressWarnings("unchecked")
-    private boolean checkInput() {
+    private boolean checkInput(Solution solution) {
+        ArrayList<String> solutionErrorMessages = this.errorMessages.getOrDefault(solution.getIndex(), new ArrayList<>());
+        Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck = solution.getAllBoxesInTruck();
         boolean pass = true;
         ArrayList<String> resultIds = new ArrayList<>();
         ArrayList<String> inputIds = new ArrayList<>();
-        for (Map<Integer, BoxInTruck> boxes: this.allBoxesInTruck.values()) {
+        for (Map<Integer, BoxInTruck> boxes: allBoxesInTruck.values()) {
             for (BoxInTruck boxInTruck : boxes.values()) {
                 resultIds.add(boxInTruck.getId());
             }
@@ -135,19 +147,20 @@ public class Check {
             equal = resultIds.equals(inputIds);
         }
         if (!equal) {
-            this.errorMessages.add("The result boxes are not consistent with the input boxes.");
-            this.errorMessages.add("Input boxes: size " + inputIds.size());
+            solutionErrorMessages.add("The result boxes are not consistent with the input boxes.");
+            solutionErrorMessages.add("Input boxes: size " + inputIds.size());
             ArrayList<String> inputIdsCopy = (ArrayList<String>) inputIds.clone();
             resultIds.forEach(inputIdsCopy::remove);
-            this.errorMessages.add("Unpacked boxes: ");
-            this.errorMessages.add(inputIdsCopy.toString());
-            this.errorMessages.add("Result boxes: size " + resultIds.size());
-            this.errorMessages.add("Extra packed boxes: ");
+            solutionErrorMessages.add("Unpacked boxes: ");
+            solutionErrorMessages.add(inputIdsCopy.toString());
+            solutionErrorMessages.add("Result boxes: size " + resultIds.size());
+            solutionErrorMessages.add("Extra packed boxes: ");
             ArrayList<String> resultIdsCopy = (ArrayList<String>) resultIds.clone();
             inputIds.forEach(resultIdsCopy::remove);
-            this.errorMessages.add(resultIdsCopy.toString());
+            solutionErrorMessages.add(resultIdsCopy.toString());
             pass = false;
         }
+        this.errorMessages.put(solution.getIndex(), solutionErrorMessages);
         return pass;
     }
 
@@ -155,18 +168,19 @@ public class Check {
      * Check all the trucks.
      * @return true: passed; false: unpassed.
      */
-    private boolean checkTruck() {
+    private boolean checkTruck(Solution solution) {
+        ArrayList<String> solutionErrorMessages = this.errorMessages.getOrDefault(solution.getIndex(), new ArrayList<>());
         boolean pass = true;
-        for (int truckIndex = 1; truckIndex <= this.allBoxesInTruck.size(); truckIndex++){
-            Map<Integer, BoxInTruck> boxes = this.allBoxesInTruck.get(truckIndex);
-            Bin bin = this.allBins.get(truckIndex);
+        for (int truckIndex = 1; truckIndex <= solution.getAllBoxesInTruck().size(); truckIndex++){
+            Map<Integer, BoxInTruck> boxes = solution.getAllBoxesInTruck().get(truckIndex);
+            Bin bin = solution.getAllBins().get(truckIndex);
             ArrayList<String> platformOrder = new ArrayList<>();
             double totalWeight = 0.;
             for (int i = 1; i <= boxes.size(); i++) {
                 BoxInTruck boxInTruck = boxes.get(i);
                 // Check the order of the platform the boxInTruck belonging to.
                 if (!checkPlatformOrder(boxInTruck, platformOrder)) {
-                    this.errorMessages.add("Unpassed: The platform of the box " + i + " in truck " + truckIndex
+                    solutionErrorMessages.add("Unpassed: The platform of the box " + i + " in truck " + truckIndex
                             + " is duplicated with the previous.");
                     pass = false;
                 }
@@ -175,7 +189,7 @@ public class Check {
                 BoxInTruck boxInTruck = boxes.get(i);
                 // Check the boundary of the bin.
                 if (!checkBoundary(boxInTruck, bin)) {
-                    this.errorMessages.add("Unpassed: The box " + i + " in truck " + truckIndex
+                    solutionErrorMessages.add("Unpassed: The box " + i + " in truck " + truckIndex
                             + " is beyond the boundary of the bin.");
                     pass = false;
                 }
@@ -183,7 +197,7 @@ public class Check {
                 // AKA: check if the box is needed to be pulled out to pack the latter boxes.
                 ArrayList<Box> behindBoxesInTruck = getBehindBoxes(boxInTruck, boxes);
                 if (!checkPullOut(boxInTruck, behindBoxesInTruck, platformOrder)) {
-                    this.errorMessages.add(
+                    solutionErrorMessages.add(
                             "Unpassed: the box " + i + " is needed to be pulled out to pack the latter boxes in truck"
                                     + truckIndex + ".");
                     pass = false;
@@ -191,7 +205,7 @@ public class Check {
                 // Check if the total weight of the boxes is beyond the max loading weight of the truck.
                 totalWeight += boxInTruck.getWeight();
                 if (totalWeight > bin.getMaxLoadWeight()) {
-                    this.errorMessages.add(
+                    solutionErrorMessages.add(
                             "Unpassed: the total weight of the boxes is beyond the max loading weight of the truck "
                                     + truckIndex + ".");
                     pass = false;
@@ -200,7 +214,7 @@ public class Check {
                     BoxInTruck boxInTruck2 = boxes.get(j);
                     // Check the overlap of the two boxes.
                     if (!checkOverlap(boxInTruck2, boxInTruck)) {
-                        this.errorMessages.add(
+                        solutionErrorMessages.add(
                                 "Unpassed: The box " + i + " and the box " + j + " in the truck " + truckIndex
                                         + " are overlapped.");
                         pass = false;
@@ -209,7 +223,7 @@ public class Check {
                 ArrayList<Box> belowBoxesInTruck = getBelowBoxes(boxInTruck, boxes);
                 // Check the support area ratio.
                 if (!checkSupportAreaRatio(boxInTruck, belowBoxesInTruck)) {
-                    this.errorMessages.add(
+                    solutionErrorMessages.add(
                             "Unpassed: the support area below the box " + i + " in the truck " + truckIndex
                                     + " is smaller than " + String.format("%.0f", Config.SUPPORT_RATIO * 100) + "%.");
                     pass = false;
@@ -217,11 +231,12 @@ public class Check {
             }
             // Check if the bonded warehouse is the first platform.
             if (!checkFirstPlatform(platformOrder)) {
-                this.errorMessages.add(
+                solutionErrorMessages.add(
                         "Unpassed: the truck " + truckIndex + " does not visit some bonded warehouses first.");
                 pass = false;
             }
         }
+        this.errorMessages.put(solution.getIndex(), solutionErrorMessages);
         return pass;
     }
 
@@ -405,16 +420,8 @@ public class Check {
         return orderCheck;
     }
 
-    public ArrayList<String> getErrorMessages() {
+    public Map<Integer, ArrayList<String>> getErrorMessages() {
         return this.errorMessages;
-    }
-
-    public Map<Integer, Map<Integer, BoxInTruck>> getAllBoxesInTruck() {
-        return this.allBoxesInTruck;
-    }
-
-    public Map<Integer, Bin> getAllBins() {
-        return this.allBins;
     }
 
     public ArrayList<Box> getInputBoxes() {
@@ -423,29 +430,5 @@ public class Check {
 
     public Route getRoute() {
         return this.route;
-    }
-
-    public static void main(String[] args) throws IOException {
-        String orderName = "ECO1908020033_d";
-        String inputDir = ".\\data\\data0923\\input\\";
-        String outputDir = ".\\data\\data0923\\2\\";
-        // check json or html files.
-        System.out.println(orderName);
-        Check checkDir = Check.getOrderCheck(inputDir, outputDir, orderName, "html");
-        try {
-            boolean pass = checkDir.check();
-            ArrayList<String> errorMessages = checkDir.getErrorMessages();
-            if (!errorMessages.isEmpty()) {
-                for (String errorMessage: errorMessages) {
-                    System.out.println(errorMessage);
-                }
-            }
-            if (pass) {
-                System.out.println("All checks passed.");
-            }
-        }
-        catch (StackOverflowError stackOverflowError) {
-            System.out.println("Stack overflow.\n");
-        }
     }
 }

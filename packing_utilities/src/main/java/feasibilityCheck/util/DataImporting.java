@@ -116,6 +116,26 @@ public class DataImporting {
     }
 
     /**
+     * Generate all bins and boxes in all solutions.
+     */
+    public ArrayList<Solution> genAllSolutions(String directory) throws IOException {
+        ArrayList<Solution> solutions = new ArrayList<>();
+        File dir = new File(directory);
+        if (dir.listFiles() != null) {
+            int solutionIndex = 1;
+            for (File file: Objects.requireNonNull(dir.listFiles())) {
+                if (file.isDirectory()) {
+                    Map<Integer, Bin> allBins = genAllBins(file.getPath());
+                    Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck =  genAllBoxesInTruck(file.getPath());
+                    solutions.add(new Solution(allBins, allBoxesInTruck, solutionIndex));
+                    solutionIndex++;
+                }
+            }
+        }
+        return solutions;
+    }
+
+    /**
      * Generate all boxes of the order from an input file.
      */
     @SuppressWarnings("unchecked")

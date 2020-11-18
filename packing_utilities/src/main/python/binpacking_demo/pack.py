@@ -193,7 +193,7 @@ class Pack:
         return Bin(**bin_map)
 
     def _gen_res(self, packed_bin_list):
-        res = {"estimateCode": self.data["estimateCode"]}
+        res = {"estimateCode": self.data["estimateCode"], "solutionArray": []}
         truck_list = []
         if packed_bin_list:
             for packed_bin in packed_bin_list:
@@ -231,5 +231,5 @@ class Pack:
                         platform_list.append(spu['platformCode'])
                 truck["platformArray"] = platform_list
                 truck_list.append(truck)
-        res["truckArray"] = truck_list
+        res["solutionArray"].append(truck_list)
         return res

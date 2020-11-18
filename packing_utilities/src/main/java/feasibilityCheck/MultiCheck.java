@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -71,11 +72,22 @@ public class MultiCheck {
             Check orderCheck = Check.getOrderCheck(this.inputDir, this.outputDir, orderName, outputMode, this.visualizationDir);
             try {
                 orderCheck.check();
-                ArrayList<String> errorMessages = orderCheck.getErrorMessages();
-                if (!errorMessages.isEmpty()) {
+                Map<Integer, ArrayList<String>> errorMessages = orderCheck.getErrorMessages();
+                int errorNum = 0;
+                for (ArrayList<String> solutionErrors: errorMessages.values()) {
+                    errorNum += solutionErrors.size();
+                }
+                if (errorNum > 0) {
                     print(orderNameOri);
-                    for (String errorMessage: errorMessages) {
-                        print(errorMessage);
+                    for (int i = 1; i <= errorMessages.size(); i++) {
+                        ArrayList<String> solutionErrors = errorMessages.get(i);
+                        if (!solutionErrors.isEmpty()) {
+                            print("Solution " + i + " errors:");
+                            for (String errorMessage: solutionErrors) {
+                                print(errorMessage);
+                            }
+                            print("");
+                        }
                     }
                     print("");
                 }
@@ -113,10 +125,6 @@ public class MultiCheck {
     }
 
     public static void main(String[] args) throws IOException {
-//        String inputDir = ".\\data\\data0923\\input";
-//        String outputDir = ".\\data\\data0923\\2\\aft";
-//        String resultFile = ".\\result\\checkResult2.txt";
-//        String visualizationDir = null;
         String inputDir = args[0];
         String outputDir = args[1];
         String resultFile = ".\\result\\checkResult.txt";

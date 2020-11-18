@@ -28,6 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static feasibilityCheck.util.DeleteDirectory.deleteDirectory;
+
 
 public class OutputJson2Html {
 
@@ -52,66 +54,69 @@ public class OutputJson2Html {
             String htmlPath
     ) throws IOException {
         // Generate HTML string.
-        List<Map<String, Object>> htmlStr = toHtmlStr(messageStr, estimateResult, truckTemplatePath);
+        List<List<Map<String, Object>>> htmlStr = toHtmlStr(messageStr, estimateResult, truckTemplatePath);
         if (htmlStr.size() == 0) return;
 
-        String path = htmlPath;
-        File dir = new File(path);
-        if (dir.exists()) {
-            if (dir.list().length > 0) {
-                for (File f : dir.listFiles()) {
-                    f.delete();
-                }
-            }
-        } else {
-            dir.mkdir();
+        File dir = new File(htmlPath);
+        if (dir.isDirectory()) {
+            deleteDirectory(htmlPath);
         }
+        dir.mkdir();
 
-        int truckIndex = 1;
-        for (Map<String, Object> map : htmlStr) {
-            String truckHtmlStr = (String) map.get("truck");
-            String truckTypeCode = (String) map.get("truckTypeCode");
+        int solutionIndex = 1;
+        for (List<Map<String, Object>> solutionHtmlStrs: htmlStr) {
+            String subDirPath = Paths.get(htmlPath, "solution" + solutionIndex).toString();
+            File subDir = new File(subDirPath);
+            subDir.mkdir();
+            int truckIndex = 1;
+            for (Map<String, Object> map: solutionHtmlStrs) {
+                String truckHtmlStr = (String) map.get("truck");
+                String truckTypeCode = (String) map.get("truckTypeCode");
+                // Output truck-related html files.
 
-            // Output truck-related html files.
-            String truckFilename = Paths.get(path, truckIndex + "_" + truckTypeCode + ".html").toString();
-            File truckFile = new File(truckFilename);
-            if (!truckFile.exists()) {
+                String truckFilename = Paths.get(subDirPath, truckIndex + "_" + truckTypeCode + ".html").toString();
+                File truckFile = new File(truckFilename);
                 truckFile.createNewFile();
+                FileWriter truckWriter = new FileWriter(truckFile);
+                truckWriter.write(truckHtmlStr);
+                truckWriter.flush();
+                truckWriter.close();
+                truckIndex++;
             }
-            FileWriter truckWriter = new FileWriter(truckFile);
-            truckWriter.write(truckHtmlStr);
-            truckWriter.flush();
-            truckWriter.close();
-            truckIndex++;
+            solutionIndex++;
         }
     }
 
     /**
      * Convert input params and output params to HTML String.
      */
-    public static List<Map<String, Object>> toHtmlStr(
+    public static List<List<Map<String, Object>>> toHtmlStr(
             String messageStr,
             String estimateResult,
             String truckTemplatePath
     ) throws IOException {
-        List<Map<String, Object>> result = new ArrayList<>();
+        List<List<Map<String, Object>>> result = new ArrayList<>();
         JSONObject packedResult = JSON.parseObject(estimateResult);
         JSONObject message = JSON.parseObject(messageStr);
         JSONObject algorithmBaseParamDto = message.getJSONObject(
                 "algorithmBaseParamDto");
-        JSONArray truckArray = packedResult.getJSONArray("truckArray");
-
-        for (int i = 0; i < truckArray.size(); i++) {
-            JSONObject truck = (JSONObject) truckArray.get(i);
-            JSONArray spuArray = truck.getJSONArray("spuArray");
-            // Generate truck-related html strings.
-            String boxesJsonStr = genBoxesJsonStr(spuArray);
-            String truckJsonStr = genTruckJsonStr(truck, algorithmBaseParamDto.getJSONObject("truckTypeMap"));
-            String truckHtmlStr = genTruckHtml(truckTemplatePath, boxesJsonStr, truckJsonStr);
-            Map<String, Object> map = new HashMap<>();
-            map.put("truckTypeCode", truck.getString("truckTypeCode"));
-            map.put("truck", truckHtmlStr);
-            result.add(map);
+        JSONArray solutionArray = packedResult.getJSONArray("solutionArray");
+        for (int i = 0; i < solutionArray.size(); i++) {
+            JSONArray truckArray = (JSONArray) solutionArray.get(i);
+            List<Map<String, Object>> solution = new ArrayList<>();
+            for (int j = 0; j < truckArray.size(); j++) {
+                JSONObject truck = (JSONObject) truckArray.get(j);
+                JSONArray spuArray = truck.getJSONArray("spuArray");
+                // Generate truck-related html strings.
+                String boxesJsonStr = genBoxesJsonStr(spuArray);
+                String truckJsonStr = genTruckJsonStr(truck, algorithmBaseParamDto.getJSONObject("truckTypeMap"));
+                String truckHtmlStr = genTruckHtml(truckTemplatePath, boxesJsonStr, truckJsonStr);
+                Map<String, Object> map = new HashMap<>();
+                map.put("truckTypeCode", truck.getString("truckTypeCode"));
+                map.put("truck", truckHtmlStr);
+                solution.add(map);
+            }
+            result.add(solution);
         }
         return result;
     }
