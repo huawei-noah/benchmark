@@ -127,7 +127,7 @@ Note: if the online access is not available, you need to download them from thei
 | | innerLength | | Float | Truck length (mm). Same as the input file. |
 | | innerWidth | | Float | Truck width (mm). Same as the input file. |
 | | innerHeight | | Float | Truck height (mm). Same as the input file. |
-| | maxLoadWeight | | Float | Carrying capacity of the truck (kg). Same as the input file. |
+| | maxLoad | | Float | Carrying capacity of the truck (kg). Same as the input file. |
 | | platformArray | | Array | Route of the truck, a list of platform codes. |
 | | spuArray | | Array | Array of boxes packed in this truck. |
 | | | spuId | String | Identification of the box. Same as the input file. |
