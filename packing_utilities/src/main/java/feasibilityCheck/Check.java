@@ -298,12 +298,14 @@ public class Check {
 
     /**
      * Check if the support area ratio is larger than a certain percentage in a truck.
-     * In a truck, if the position of a box is higher than a certain level, it should be supported by one box.
      * @param box: current box being checked.
      * @param belowBoxes: the boxes below the current boxes.
      * @return true: passed; false: unpassed.
      */
     private boolean checkSupportAreaRatio(Box box, ArrayList<Box> belowBoxes) {
+        if (belowBoxes.isEmpty()) {
+            return box.getZ1() < Config.CONTACT_ERROR;
+        }
         double SupportArea = 0.;
         for (Box belowBox: belowBoxes) {
             // Calculate the total support area.
@@ -342,13 +344,13 @@ public class Check {
      * Get the boxes behind a given box.
      */
     private ArrayList<Box> getBehindBoxes(Box boxInTruck, Map<Integer, BoxInTruck> boxes) {
-        ArrayList<Box> belowBoxesInTruck = new ArrayList<>();
+        ArrayList<Box> behindBoxes = new ArrayList<>();
         for (Box boxInTruck2 : boxes.values()) {
             if (isBehind(boxInTruck, boxInTruck2)) {
-                belowBoxesInTruck.add(boxInTruck2);
+                behindBoxes.add(boxInTruck2);
             }
         }
-        return belowBoxesInTruck;
+        return behindBoxes;
     }
 
     /**
