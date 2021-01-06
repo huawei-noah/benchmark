@@ -14,8 +14,8 @@
    limitations under the License.
 """
 
-import general_utils as utils
-from entity import PackedBox, AlgorithmBox
+from .. import general_utils as utils
+from ..entity import PackedBox, AlgorithmBox
 
 
 def assign_box_2_bin(box, space, packed_bin, box_direction):

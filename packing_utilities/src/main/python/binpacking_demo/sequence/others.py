@@ -14,10 +14,10 @@
    limitations under the License.
 """
 
-from entity import SimpleBlock
-import general_utils as utils
-import constrains
-import config
+from ..entity import SimpleBlock
+from .. import general_utils as utils
+from .. import constrains
+from .. import config
 
 
 class BlockHeuristic:

@@ -2,9 +2,9 @@
 # coding=UTF-8
 
 import copy
-from entity import Space, Area
-import general_utils as utils
-import constrains
+from ..entity import Space, Area
+from .. import general_utils as utils
+from .. import constrains
 
 
 class SimpleSpace:

@@ -14,7 +14,7 @@
    limitations under the License.
 """
 
-import config
+from . import config
 
 
 def choose_box_direction_len(length, width, height, direction):

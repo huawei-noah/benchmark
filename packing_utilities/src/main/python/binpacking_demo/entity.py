@@ -14,7 +14,7 @@
    limitations under the License.
 """
 
-import general_utils as utils
+from . import general_utils as utils
 
 
 class Space:

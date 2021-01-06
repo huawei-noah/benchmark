@@ -15,7 +15,7 @@
 
 import os
 import sys
-from pack import Pack
+from .pack import Pack
 
 
 def main(argv):

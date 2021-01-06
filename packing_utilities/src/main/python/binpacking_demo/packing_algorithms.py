@@ -15,11 +15,11 @@
 """
 
 import copy
-from sequence.others import BlockHeuristic
-from entity import PackedBin, Space, CoordinateItem
-from space.simple_space import SimpleSpace
-from space import general_utils as space_utils
-import general_utils as utils
+from .sequence.others import BlockHeuristic
+from .entity import PackedBin, Space, CoordinateItem
+from .space.simple_space import SimpleSpace
+from .space import general_utils as space_utils
+from . import general_utils as utils
 
 
 def update_box_size_and_avail_map(box_size_map, box_list, avail, block):

@@ -22,9 +22,9 @@ import os
 import time
 import traceback
 
-from entity import AlgorithmBox, Bin
-from packing_algorithms import SSBH
-from simulator import Simulator
+from .entity import AlgorithmBox, Bin
+from .packing_algorithms import SSBH
+from .simulator import Simulator
 
 
 class Pack:

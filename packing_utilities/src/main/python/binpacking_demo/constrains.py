@@ -14,9 +14,9 @@
    limitations under the License.
 """
 
-import general_utils as utils
+from . import general_utils as utils
 import numpy as np
-from entity import Area
+from .entity import Area
 import math
 
 
