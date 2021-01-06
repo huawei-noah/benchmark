@@ -122,14 +122,12 @@ public class DataImporting {
         ArrayList<Solution> solutions = new ArrayList<>();
         File dir = new File(directory);
         if (dir.listFiles() != null) {
-            int solutionIndex = 1;
-            for (File file: Objects.requireNonNull(dir.listFiles())) {
-                if (file.isDirectory()) {
-                    Map<Integer, Bin> allBins = genAllBins(file.getPath());
-                    Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck =  genAllBoxesInTruck(file.getPath());
-                    solutions.add(new Solution(allBins, allBoxesInTruck, solutionIndex));
-                    solutionIndex++;
-                }
+            int solutionNum = Objects.requireNonNull(dir.listFiles()).length;
+            for (int solutionIndex = 1; solutionIndex <= solutionNum; solutionIndex++) {
+                String filePath = Paths.get(directory, "solution"+solutionIndex).toString();
+                Map<Integer, Bin> allBins = genAllBins(filePath);
+                Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck = genAllBoxesInTruck(filePath);
+                solutions.add(new Solution(allBins, allBoxesInTruck, solutionIndex));
             }
         }
         return solutions;
