@@ -35,7 +35,7 @@ public class MultiCheck {
     public MultiCheck(String inputDir, String outputDir, String resultFile, String visualizationDir) throws IOException {
         this.inputDir = inputDir;
         this.outputDir = outputDir;
-        this.orders = new File(inputDir);
+        this.orders = new File(outputDir);
         if (!this.orders.isDirectory()) {
             throw new IOException("inputDir and outputDir should be directories.");
         }
