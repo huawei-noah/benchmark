@@ -165,6 +165,44 @@ public class Check {
     }
 
     /**
+     * Check if the output box sizes are insistent with the input boxes.
+     * @return true: passed; false: unpassed;
+     */
+    @SuppressWarnings("unchecked")
+    private boolean checkInputSize(Solution solution) {
+        ArrayList<String> solutionErrorMessages = this.errorMessages.getOrDefault(solution.getIndex(), new ArrayList<>());
+        Map<Integer, Map<Integer, BoxInTruck>> allBoxesInTruck = solution.getAllBoxesInTruck();
+        boolean pass = true;
+        for (Map<Integer, BoxInTruck> boxes: allBoxesInTruck.values()) {
+            for (BoxInTruck boxInTruck : boxes.values()) {
+                Map spuBox = boxInTruck.getSpuBox();
+                if (spuBox == null) {
+                    pass = false;
+                    solutionErrorMessages.add("Unpassed: Do not find box with spu id: " + boxInTruck.getId());
+                    break;
+                }
+                Box inputBox = new Box(spuBox);
+                double boxLength = Math.max(boxInTruck.getLength(), boxInTruck.getWidth());
+                double boxWidth = Math.min(boxInTruck.getLength(), boxInTruck.getWidth());
+                double inputLength = Math.max(inputBox.getLength(), inputBox.getWidth()) / 10;
+                double inputWidth = Math.min(inputBox.getLength(), inputBox.getWidth()) / 10;
+                if (!boxInTruck.getPlatformCode().equals(inputBox.getPlatformCode())
+                        || Math.abs(boxLength - inputLength) > Config.BOUNDARY_ERROR
+                        || Math.abs(boxWidth- inputWidth) > Config.BOUNDARY_ERROR
+                        || Math.abs(boxInTruck.getHeight() - inputBox.getHeight() / 10) > Config.BOUNDARY_ERROR
+                        || Math.abs(boxInTruck.getWeight() - inputBox.getWeight()) > Config.BOUNDARY_ERROR) {
+                    pass = false;
+                    solutionErrorMessages.add("Unpassed: the info of box with spu id "
+                            + boxInTruck.getId() + " is inconsistent with the input file.");
+                    break;
+                }
+            }
+        }
+        this.errorMessages.put(solution.getIndex(), solutionErrorMessages);
+        return pass;
+    }
+
+    /**
      * Check all the trucks.
      * @return true: passed; false: unpassed.
      */

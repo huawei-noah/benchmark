@@ -231,4 +231,8 @@ public class Box {
     public int getOrder() {
         return this.order;
     }
+
+    public Map getSpuBox() {
+        return spuBox;
+    }
 }
