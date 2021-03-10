@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                font-family: Monospace;
+                background-color: #f0f0f0;
+                margin: 0px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://cdn.bootcdn.net/ajax/libs/three.js/73/three.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/tween.js/0.11.0/Tween.min.js"></script>
+		<script src="https://unpkg.com/three@0.73.1/examples/js/controls/TrackballControls.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/stats.js/10/Stats.min.js"></script>
+        <script>
+
+            var jsonstr = '[{"boxId":"94263480100K972","x":-58.950001,"y":-71.750000,"z":-175.500000,"width":113.900002,"height":83.500000,"length":238.000000,"weight":274.500000,"platform":"platform03","order":1,"material":"","type":1,"place":100},{"boxId":"94263480100K973","x":-84.650002,"y":-11.500000,"z":-266.000000,"width":57.000000,"height":37.000000,"length":62.500000,"weight":23.000000,"platform":"platform03","order":2,"material":"","type":1,"place":200},{"boxId":"942627601024075","x":-87.400002,"y":15.000000,"z":-269.000000,"width":51.000000,"height":16.000000,"length":57.000000,"weight":5.850000,"platform":"platform04","order":3,"material":"","type":1,"place":200},{"boxId":"942627601023886","x":-87.400002,"y":31.000000,"z":-269.000000,"width":51.000000,"height":16.000000,"length":57.000000,"weight":5.700000,"platform":"platform04","order":4,"material":"","type":1,"place":200},{"boxId":"942652801018781","x":-98.650002,"y":43.750000,"z":-281.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":5,"material":"","type":1,"place":200},{"boxId":"942652801018896","x":-98.650002,"y":53.250000,"z":-281.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":6,"material":"","type":1,"place":200},{"boxId":"942652801018888","x":-98.650002,"y":62.750000,"z":-281.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":7,"material":"","type":1,"place":200},{"boxId":"942652801018892","x":-98.650002,"y":72.250000,"z":-281.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":8,"material":"","type":1,"place":200},{"boxId":"942652801018885","x":-83.800003,"y":-11.000000,"z":-192.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":9,"material":"","type":1,"place":100},{"boxId":"942652801018893","x":-83.800003,"y":-11.000000,"z":-103.699997,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":10,"material":"","type":1,"place":100},{"boxId":"942652801018889","x":-83.800003,"y":27.000000,"z":-192.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":11,"material":"","type":1,"place":100},{"boxId":"942652801018778","x":-83.800003,"y":27.000000,"z":-103.699997,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":12,"material":"","type":1,"place":100},{"boxId":"94262500102D727","x":-83.900002,"y":57.500000,"z":-215.500000,"width":44.000000,"height":23.000000,"length":64.000000,"weight":10.160000,"platform":"platform04","order":13,"material":"","type":1,"place":200},{"boxId":"94262500102D722","x":-83.900002,"y":80.500000,"z":-215.500000,"width":44.000000,"height":23.000000,"length":64.000000,"weight":10.160000,"platform":"platform04","order":14,"material":"","type":1,"place":200},{"boxId":"942652801018779","x":-85.900002,"y":58.750000,"z":-155.000000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":15,"material":"","type":1,"place":100},{"boxId":"942652801018890","x":-85.900002,"y":84.250000,"z":-155.000000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":16,"material":"","type":1,"place":100},{"boxId":"94262500102D731","x":-27.700001,"y":-4.500000,"z":-197.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":50.799999,"platform":"platform04","order":17,"material":"","type":1,"place":100},{"boxId":"94262500102D726","x":-27.700001,"y":-4.500000,"z":-117.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":49.400002,"platform":"platform04","order":18,"material":"","type":1,"place":100},{"boxId":"94262500102D729","x":-27.700001,"y":46.500000,"z":-197.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.400002,"platform":"platform04","order":19,"material":"","type":1,"place":100},{"boxId":"94262500102D728","x":-27.700001,"y":46.500000,"z":-117.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.000000,"platform":"platform04","order":20,"material":"","type":1,"place":100},{"boxId":"942652801018887","x":38.000000,"y":-76.000000,"z":-234.500000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.599998,"platform":"platform04","order":21,"material":"","type":1,"place":100},{"boxId":"942652801018895","x":38.000000,"y":-1.000000,"z":-234.500000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.400002,"platform":"platform04","order":22,"material":"","type":1,"place":100},{"boxId":"942652801018891","x":38.000000,"y":74.000000,"z":-234.500000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.000000,"platform":"platform04","order":23,"material":"","type":1,"place":100},{"boxId":"94262500102D723","x":38.000000,"y":-88.000000,"z":-150.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.000000,"platform":"platform04","order":24,"material":"","type":1,"place":200},{"boxId":"94262500102D725","x":38.000000,"y":-37.000000,"z":-150.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.400002,"platform":"platform04","order":25,"material":"","type":1,"place":200},{"boxId":"94262500102D730","x":38.000000,"y":14.000000,"z":-150.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.200001,"platform":"platform04","order":26,"material":"","type":1,"place":200},{"boxId":"94262500102D724","x":38.000000,"y":65.000000,"z":-150.500000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.000000,"platform":"platform04","order":27,"material":"","type":1,"place":200},{"boxId":"942652801018780","x":38.000000,"y":-76.000000,"z":-66.500000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":56.799999,"platform":"platform04","order":28,"material":"","type":1,"place":100},{"boxId":"942652801018894","x":36.500000,"y":-25.750000,"z":-96.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":29,"material":"","type":1,"place":200},{"boxId":"942652801018886","x":36.500000,"y":-0.250000,"z":-96.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":30,"material":"","type":1,"place":200},{"boxId":"94265280T006878","x":-102.900002,"y":99.750000,"z":-184.750000,"width":17.500000,"height":5.500000,"length":26.000000,"weight":0.200000,"platform":"platform16","order":31,"material":"","type":1,"place":200},{"boxId":"94265280T006880","x":-102.900002,"y":105.250000,"z":-184.750000,"width":17.500000,"height":5.500000,"length":26.000000,"weight":0.200000,"platform":"platform16","order":32,"material":"","type":1,"place":200},{"boxId":"94265280T006884","x":-97.150002,"y":63.500000,"z":-97.750000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":4.720000,"platform":"platform16","order":33,"material":"","type":1,"place":100},{"boxId":"94265280T006882","x":-32.950001,"y":89.500000,"z":-218.750000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":4.720000,"platform":"platform16","order":34,"material":"","type":1,"place":100},{"boxId":"94265280T006883","x":42.500000,"y":-98.500000,"z":23.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":35,"material":"","type":1,"place":200},{"boxId":"94265280T006879","x":42.500000,"y":-68.500000,"z":23.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":36,"material":"","type":1,"place":200},{"boxId":"94265280T006881","x":42.500000,"y":-38.500000,"z":23.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":37,"material":"","type":1,"place":200},{"boxId":"94265280T006885","x":42.500000,"y":-8.500000,"z":23.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":38,"material":"","type":1,"place":200},{"boxId":"94266160101T769","x":-104.650002,"y":101.750000,"z":-157.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.860000,"platform":"platform09","order":39,"material":"","type":1,"place":100},{"boxId":"94266160101T763","x":-82.150002,"y":101.750000,"z":-157.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.840000,"platform":"platform09","order":40,"material":"","type":1,"place":100},{"boxId":"94266160101T766","x":-97.150002,"y":85.750000,"z":-105.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.840000,"platform":"platform09","order":41,"material":"","type":1,"place":200},{"boxId":"94262500102E111","x":-97.150002,"y":95.250000,"z":-105.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.450000,"platform":"platform09","order":42,"material":"","type":1,"place":200},{"boxId":"94262500102C563","x":-32.950001,"y":80.750000,"z":-181.750000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":5.060000,"platform":"platform09","order":43,"material":"","type":1,"place":200},{"boxId":"94262500102C492","x":-32.950001,"y":80.750000,"z":-145.250000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":5.040000,"platform":"platform09","order":44,"material":"","type":1,"place":200},{"boxId":"94262500102C472","x":-32.950001,"y":98.250000,"z":-181.750000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":4.400000,"platform":"platform09","order":45,"material":"","type":1,"place":200},{"boxId":"94262500102C564","x":-32.950001,"y":98.250000,"z":-145.250000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":4.400000,"platform":"platform09","order":46,"material":"","type":1,"place":200},{"boxId":"94262500102C518","x":-32.950001,"y":89.500000,"z":-108.250000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":7.100000,"platform":"platform09","order":47,"material":"","type":1,"place":100},{"boxId":"94262500102C490","x":17.250000,"y":95.500000,"z":-156.750000,"width":35.500000,"height":10.000000,"length":38.500000,"weight":0.940000,"platform":"platform09","order":48,"material":"","type":1,"place":200},{"boxId":"94262500102C491","x":55.750000,"y":95.500000,"z":-156.750000,"width":35.500000,"height":10.000000,"length":38.500000,"weight":0.920000,"platform":"platform09","order":49,"material":"","type":1,"place":200},{"boxId":"94262500102C390","x":31.100000,"y":106.500000,"z":-157.399994,"width":34.200001,"height":12.000000,"length":66.199997,"weight":3.120000,"platform":"platform09","order":50,"material":"","type":1,"place":200},{"boxId":"94262500102C470","x":24.250000,"y":22.750000,"z":-105.250000,"width":42.500000,"height":20.500000,"length":52.500000,"weight":7.160000,"platform":"platform09","order":51,"material":"","type":1,"place":200},{"boxId":"942652801019128","x":42.000000,"y":35.750000,"z":21.500000,"width":56.000000,"height":58.500000,"length":88.000000,"weight":43.000000,"platform":"platform09","order":52,"material":"","type":1,"place":200},{"boxId":"94262500102A018","x":31.100000,"y":71.000000,"z":10.600000,"width":34.200001,"height":12.000000,"length":66.199997,"weight":3.100000,"platform":"platform09","order":53,"material":"","type":1,"place":200},{"boxId":"942652801019432","x":53.000000,"y":-72.150002,"z":108.000000,"width":110.000000,"height":82.699997,"length":110.000000,"weight":156.500000,"platform":"platform09","order":54,"material":"","type":1,"place":100},{"boxId":"94266160101X853","x":38.000000,"y":-81.250000,"z":223.000000,"width":80.000000,"height":64.500000,"length":120.000000,"weight":63.000000,"platform":"platform09","order":55,"material":"","type":1,"place":100},{"boxId":"94262500102D953","x":44.500000,"y":-9.300000,"z":106.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":64.000000,"platform":"platform22","order":56,"material":"","type":1,"place":100},{"boxId":"94262500102D950","x":44.500000,"y":33.700001,"z":106.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":64.000000,"platform":"platform22","order":57,"material":"","type":1,"place":100},{"boxId":"94262500102D952","x":44.500000,"y":76.699997,"z":106.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":58,"material":"","type":1,"place":100},{"boxId":"94262500102D640","x":44.500000,"y":-27.500000,"z":216.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":59,"material":"","type":1,"place":100},{"boxId":"94262500102D954","x":44.500000,"y":15.500000,"z":216.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":60,"material":"","type":1,"place":100},{"boxId":"94262500102D955","x":44.500000,"y":58.500000,"z":216.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":61,"material":"","type":1,"place":100},{"boxId":"94262500102D956","x":-62.900002,"y":-92.000000,"z":-10.000000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":62,"material":"","type":1,"place":200},{"boxId":"942627601023546","x":-74.449997,"y":-32.599998,"z":-26.150000,"width":60.700001,"height":75.800003,"length":82.900002,"weight":59.099998,"platform":"platform20","order":63,"material":"","type":1,"place":200},{"boxId":"942627601023545","x":-74.449997,"y":43.200001,"z":-26.150000,"width":60.700001,"height":75.800003,"length":82.900002,"weight":59.000000,"platform":"platform20","order":64,"material":"","type":1,"place":200},{"boxId":"94262030100T713","x":-74.400002,"y":-92.000000,"z":72.500000,"width":72.000000,"height":43.000000,"length":83.000000,"weight":38.500000,"platform":"platform10","order":65,"material":"","type":1,"place":200},{"boxId":"94262030100T714","x":-89.400002,"y":-52.750000,"z":55.500000,"width":38.000000,"height":35.500000,"length":53.000000,"weight":5.000000,"platform":"platform10","order":66,"material":"","type":1,"place":200}]';
+			var jsonstr2 = '{"container_length":589.000000,"container_width":231.800003,"container_height":227.000000,"container_max_load":18000.000000,"container_type_name":"20GP"}'
+            var objectArray= JSON.parse(jsonstr);
+			var truckJsonObj = JSON.parse(jsonstr2);
+            var container, stats;
+            var camera, controls, scene, projector, renderer;
+            var objects = [], plane;
+            var mouse = new THREE.Vector2(), offset = new THREE.Vector3(), INTERSECTED, SELECTED; 
+            init();
+            animate();
+            function init() {
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+                camera.position.x = -600;
+                camera.position.y = 400;
+                camera.position.z = 1000;
+                controls = new THREE.TrackballControls( camera );
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+                controls.noZoom = false;
+                controls.noPan = true;
+                controls.staticMoving = false;
+                controls.dynamicDampingFactor = 0.3;
+                scene = new THREE.Scene();
+                var ambientLight = new THREE.AmbientLight( Math.random() *0xffffff );
+                scene.add( ambientLight );
+                var directionalLight = new THREE.DirectionalLight( Math.random() * 0xffffff );
+                directionalLight.position.set( 0, 1, 0 );
+                scene.add( directionalLight );
+                var pointLight = new THREE.PointLight( 0xff0000, 1, 500 );
+                pointLight.position.set( 0, 0, -200 );
+                scene.add( pointLight );
+
+                container_length = truckJsonObj.container_length;
+                container_width = truckJsonObj.container_width;
+                container_height = truckJsonObj.container_height;
+                var cube_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( container_width, container_height, container_length, 1,1,1 ), 
+                    new THREE.MeshBasicMaterial( { color:0xefb73e, wireframe:true } )
+                );
+                cube_1.position.x = 0;
+                cube_1.position.y = 0;
+                cube_1.position.z = 0;
+                scene.add( cube_1 );
+
+                truck_head_length = 145;
+                var truck_head_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 200, 100, truck_head_length, 1, 1, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_1.position.x = 0;
+                truck_head_1.position.y = -50;
+                truck_head_1.position.z = -(container_length/2 + truck_head_length/2);
+                scene.add( truck_head_1 );
+                
+                truck_head_length_2 = 80;
+                var truck_head_2 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 170, 60, truck_head_length_2, 1, 0, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_2.position.x = 0;
+                truck_head_2.position.y = 30;
+                truck_head_2.position.z = -(container_length/2 + truck_head_length_2/2);
+                scene.add( truck_head_2 );
+                
+                truck_head_chimney_radius = 7;
+                var truck_head_chimney1 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney1.position.x = 100;
+                truck_head_chimney1.position.y = 50;
+                truck_head_chimney1.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney1 );
+                
+                var truck_head_chimney2 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney2.position.x = -100;
+                truck_head_chimney2.position.y = 50;
+                truck_head_chimney2.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney2 );
+        
+                var truck_wheel_1 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_1.position.x = 110;
+                truck_wheel_1.position.y = -100;
+                truck_wheel_1.position.z = -(container_length/2 + truck_head_length_2/2 + 20) ;
+                truck_wheel_1.rotation.x = 0;
+                truck_wheel_1.rotation.y = 0;
+                truck_wheel_1.rotation.z = 1.6;
+                scene.add( truck_wheel_1 );
+                
+                var truck_wheel_2 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_2.position.x = -110;
+                truck_wheel_2.position.y = -100;
+                truck_wheel_2.position.z = -(container_length/2 + truck_head_length_2/2 + 20);
+                truck_wheel_2.rotation.x = 0;
+                truck_wheel_2.rotation.y = 0;
+                truck_wheel_2.rotation.z = 1.6;
+                scene.add( truck_wheel_2 );
+
+                offset_2 = -240;
+                var truck_wheel_5 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_5.position.x = container_width/2 + 5;
+                truck_wheel_5.position.y = -100;
+                truck_wheel_5.position.z = (container_length/2 + truck_head_length_2/2 + offset_2) ;
+                truck_wheel_5.rotation.x = 0;
+                truck_wheel_5.rotation.y = 0;
+                truck_wheel_5.rotation.z = 1.6;
+                scene.add( truck_wheel_5 );
+
+                var truck_wheel_6 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_6.position.x = -container_width/2 - 5;
+                truck_wheel_6.position.y = -100;
+                truck_wheel_6.position.z = (container_length/2 + truck_head_length_2/2 + offset_2);
+                truck_wheel_6.rotation.x = 0;
+                truck_wheel_6.rotation.y = 0;
+                truck_wheel_6.rotation.z = 1.6;
+                scene.add( truck_wheel_6 );
+
+                for (var i in objectArray) {
+                    if (objectArray[i].type==2) {
+						var cylinderTopR = objectArray[i].length / 2;
+						var cylinderHeight = objectArray[i].height;
+						if (objectArray[i].place == 1 || objectArray[i].place == 2)
+						{
+							cylinderHeight = objectArray[i].width;
+						}
+						
+                        var object2 = new THREE.Mesh(
+						    new THREE.CylinderGeometry(cylinderTopR, cylinderTopR, cylinderHeight, 60),
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object2.position.x = objectArray[i].x;
+                        object2.position.y = objectArray[i].y;
+                        object2.position.z = objectArray[i].z;
+                        if (objectArray[i].place==1) {
+                            object2.rotation.z = 55;
+                        }
+                        if (objectArray[i].place==2) {
+                            object2.rotation.x = 55;
+                        }
+                        object2.width = objectArray[i].width;
+                        object2.height = objectArray[i].height;
+                        object2.length = objectArray[i].length;
+                        object2.weight = objectArray[i].weight;
+                        object2.platform = objectArray[i].platform;
+                        object2.order = objectArray[i].order;
+                        object2.materialInfo = objectArray[i].material;
+                        object2.boxId = objectArray[i].boxId;
+                        object2.type = objectArray[i].type;
+                        object2.place = objectArray[i].place;
+                        scene.add( object2 );
+                        objects.push( object2 );
+                    }
+                    if (objectArray[i].type==1) {
+						if (objectArray[i].place == 200)
+						{
+							var box_length = objectArray[i].width;
+                            var box_width = objectArray[i].length;
+						}
+						else
+						{
+							var box_length = objectArray[i].length;
+							var box_width = objectArray[i].width;
+						}
+						var box_height = objectArray[i].height;
+                        var object = new THREE.Mesh(
+                            new THREE.BoxGeometry( box_width, box_height, box_length, 1, 1, 1 ), 
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object.position.x = objectArray[i].x;
+                        object.position.y = objectArray[i].y;
+                        object.position.z = objectArray[i].z;
+						object.length = objectArray[i].length;
+						object.width = objectArray[i].width;
+						object.height = objectArray[i].height;
+                        object.weight = objectArray[i].weight;
+                        object.platform = objectArray[i].platform;
+                        object.order = objectArray[i].order;
+                        object.materialInfo = objectArray[i].material;
+                        object.boxId = objectArray[i].boxId;
+                        object.type = objectArray[i].type;
+                        object.place = objectArray[i].place;
+                        scene.add( object );
+                        objects.push( object );
+                    }
+                }
+
+                plane = new THREE.Mesh(
+                    new THREE.PlaneGeometry( 2000, 2000, 8, 8 ),
+                    new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } )
+                );
+                plane.visible = true;
+                scene.add( plane );
+                projector = new THREE.Projector();
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.sortObjects = false;
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer.shadowMapEnabled = true;
+                renderer.shadowMapType = THREE.PCFShadowMap;
+                container.appendChild( renderer.domElement );
+
+                stats = new Stats();
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.top = '0px';
+                container.appendChild( stats.domElement );
+
+                window.addEventListener( 'resize', onWindowResize, false );
+                renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+                renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+                renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+            }
+
+            function onDocumentMouseMove( event ) {
+                event.preventDefault();
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    if ( INTERSECTED != intersects[ 0 ].object ) {
+                        INTERSECTED = intersects[ 0 ].object;
+                        plane.position.copy( INTERSECTED.position );
+                        plane.lookAt( camera.position );
+                    }
+                    container.style.cursor = 'pointer';
+                } else {
+                    container.style.cursor = 'auto';
+                }
+            }
+
+            function onDocumentMouseDown( event ) {
+                event.preventDefault();
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    controls.enabled = false;  
+                    SELECTED = intersects[ 0 ].object;
+                    var info = '<B>' + 
+                        'boxId: ' + SELECTED.boxId +
+                        '</br> x: ' + SELECTED.position.x + 
+                        '</br> y: ' + SELECTED.position.y + 
+                        '</br> z: ' + SELECTED.position.z + 
+                        '</br> width: ' + SELECTED.width + 
+                        '</br> height: ' + SELECTED.height + 
+                        '</br> length: ' + SELECTED.length + 
+                        '</br> weight: ' + SELECTED.weight +
+                        '</br> platform: ' + SELECTED.platform +
+                        '</br> order: ' + SELECTED.order +
+                        '</br> material: ' + SELECTED.materialInfo + 
+                        '</br> type: ' + SELECTED.type + 
+                        '</br> place: ' + SELECTED.place + 
+                        '</B>' +
+                        '</br>' + 
+                        '--------------------------' + 
+                        '</br>' +
+                        'type(1:箱体 2:圆柱体)' +
+                        '</br>' +
+                        'place(1:品字型 2:田字型)';
+                    $("#objectInfo").html(info);
+                }
+            }
+
+            function onDocumentMouseUp( event ) {
+                event.preventDefault();
+                controls.enabled = true;
+                if ( INTERSECTED ) {
+                    plane.position.copy( INTERSECTED.position );
+                    SELECTED = null;
+                }
+                container.style.cursor = 'auto';
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+            }
+
+            function animate() {
+                requestAnimationFrame( animate );
+                render();
+                stats.update();
+            }
+
+            function render() {
+                controls.update();
+                renderer.render( scene, camera );
+            }
+
+        </script>
+        <div id="objectInfo" class="a2"><br/>点击物体获取相关属性</div>
+        <style>
+            .a2{position:absolute; left:20px; top:50px; bottom:0px; width:180px; height:250px; z-index:9999; background: #00FFFF; font-weight:bold; }
+        </style>
+    </body>
+</html>

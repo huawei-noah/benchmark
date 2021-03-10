@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                font-family: Monospace;
+                background-color: #f0f0f0;
+                margin: 0px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://cdn.bootcdn.net/ajax/libs/three.js/73/three.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/tween.js/0.11.0/Tween.min.js"></script>
+		<script src="https://unpkg.com/three@0.73.1/examples/js/controls/TrackballControls.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/stats.js/10/Stats.min.js"></script>
+        <script>
+
+            var jsonstr = '[{"boxId":"94266160101Y416","x":-75.900002,"y":-54.000000,"z":-536.000000,"width":80.000000,"height":119.000000,"length":120.000000,"weight":256.000000,"platform":"platform43","order":1,"material":"","type":1,"place":100},{"boxId":"94263800102Q615","x":4.100000,"y":-54.000000,"z":-536.000000,"width":80.000000,"height":119.000000,"length":120.000000,"weight":144.000000,"platform":"platform43","order":2,"material":"","type":1,"place":100},{"boxId":"94266160101Y415","x":-75.900002,"y":52.000000,"z":-536.000000,"width":80.000000,"height":93.000000,"length":120.000000,"weight":200.000000,"platform":"platform43","order":3,"material":"","type":1,"place":100},{"boxId":"94266160101Y417","x":2.600000,"y":25.500000,"z":-538.500000,"width":77.000000,"height":40.000000,"length":115.000000,"weight":55.500000,"platform":"platform43","order":4,"material":"","type":1,"place":100},{"boxId":"94266160101Y414","x":-6.400000,"y":58.500000,"z":-576.500000,"width":39.000000,"height":26.000000,"length":59.000000,"weight":6.000000,"platform":"platform43","order":5,"material":"","type":1,"place":200},{"boxId":"94263480100K973","x":-4.650000,"y":64.000000,"z":-528.500000,"width":57.000000,"height":37.000000,"length":62.500000,"weight":23.000000,"platform":"platform03","order":6,"material":"","type":1,"place":200},{"boxId":"94263480100K972","x":-58.950001,"y":-71.750000,"z":-357.000000,"width":113.900002,"height":83.500000,"length":238.000000,"weight":274.500000,"platform":"platform03","order":7,"material":"","type":1,"place":100},{"boxId":"942652801018781","x":-103.150002,"y":103.250000,"z":-578.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":8,"material":"","type":1,"place":100},{"boxId":"942652801018896","x":-77.650002,"y":103.250000,"z":-578.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":9,"material":"","type":1,"place":100},{"boxId":"942652801018888","x":-52.150002,"y":103.250000,"z":-578.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":10,"material":"","type":1,"place":100},{"boxId":"942652801018892","x":-98.650002,"y":103.250000,"z":-548.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.750000,"platform":"platform04","order":11,"material":"","type":1,"place":200},{"boxId":"942627601024075","x":-7.400000,"y":90.500000,"z":-531.500000,"width":51.000000,"height":16.000000,"length":57.000000,"weight":5.850000,"platform":"platform04","order":12,"material":"","type":1,"place":200},{"boxId":"94262500102D731","x":68.099998,"y":-88.000000,"z":-556.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":50.799999,"platform":"platform04","order":13,"material":"","type":1,"place":100},{"boxId":"94262500102D726","x":68.099998,"y":-37.000000,"z":-556.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":49.400002,"platform":"platform04","order":14,"material":"","type":1,"place":100},{"boxId":"94262500102D729","x":68.099998,"y":14.000000,"z":-556.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.400002,"platform":"platform04","order":15,"material":"","type":1,"place":100},{"boxId":"94262500102D728","x":68.099998,"y":65.000000,"z":-556.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.000000,"platform":"platform04","order":16,"material":"","type":1,"place":100},{"boxId":"94262500102D727","x":66.099998,"y":102.000000,"z":-564.000000,"width":44.000000,"height":23.000000,"length":64.000000,"weight":10.160000,"platform":"platform04","order":17,"material":"","type":1,"place":100},{"boxId":"942652801018779","x":-85.900002,"y":-17.250000,"z":-437.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":18,"material":"","type":1,"place":100},{"boxId":"942652801018890","x":-85.900002,"y":-17.250000,"z":-360.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":19,"material":"","type":1,"place":100},{"boxId":"942652801018894","x":-85.900002,"y":-17.250000,"z":-283.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":20,"material":"","type":1,"place":100},{"boxId":"942652801018886","x":-85.900002,"y":8.250000,"z":-437.500000,"width":60.000000,"height":25.500000,"length":77.000000,"weight":11.000000,"platform":"platform04","order":21,"material":"","type":1,"place":100},{"boxId":"942627601023886","x":-87.400002,"y":29.000000,"z":-450.500000,"width":51.000000,"height":16.000000,"length":57.000000,"weight":5.700000,"platform":"platform04","order":22,"material":"","type":1,"place":200},{"boxId":"94262500102D723","x":-91.900002,"y":21.000000,"z":-359.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":46.000000,"platform":"platform04","order":23,"material":"","type":1,"place":100},{"boxId":"94262500102D725","x":-91.900002,"y":21.000000,"z":-279.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.400002,"platform":"platform04","order":24,"material":"","type":1,"place":100},{"boxId":"94262500102D730","x":-91.900002,"y":72.000000,"z":-359.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.200001,"platform":"platform04","order":25,"material":"","type":1,"place":100},{"boxId":"94262500102D724","x":-91.900002,"y":72.000000,"z":-279.000000,"width":48.000000,"height":51.000000,"length":80.000000,"weight":45.000000,"platform":"platform04","order":26,"material":"","type":1,"place":100},{"boxId":"94262500102D722","x":-33.900002,"y":-18.500000,"z":-444.000000,"width":44.000000,"height":23.000000,"length":64.000000,"weight":10.160000,"platform":"platform04","order":27,"material":"","type":1,"place":100},{"boxId":"942652801018887","x":38.000000,"y":-76.000000,"z":-416.000000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.599998,"platform":"platform04","order":28,"material":"","type":1,"place":100},{"boxId":"942652801018895","x":38.000000,"y":-1.000000,"z":-416.000000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.400002,"platform":"platform04","order":29,"material":"","type":1,"place":100},{"boxId":"942652801018891","x":38.000000,"y":74.000000,"z":-416.000000,"width":80.000000,"height":75.000000,"length":120.000000,"weight":57.000000,"platform":"platform04","order":30,"material":"","type":1,"place":100},{"boxId":"942652801018885","x":42.599998,"y":-94.500000,"z":-323.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":31,"material":"","type":1,"place":200},{"boxId":"942652801018893","x":42.599998,"y":-56.500000,"z":-323.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":32,"material":"","type":1,"place":200},{"boxId":"942652801018889","x":42.599998,"y":-18.500000,"z":-323.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":33,"material":"","type":1,"place":200},{"boxId":"942652801018778","x":42.599998,"y":19.500000,"z":-323.899994,"width":64.199997,"height":38.000000,"length":89.199997,"weight":44.000000,"platform":"platform04","order":34,"material":"","type":1,"place":200},{"boxId":"942652801018780","x":38.000000,"y":-76.000000,"z":-231.800003,"width":80.000000,"height":75.000000,"length":120.000000,"weight":56.799999,"platform":"platform04","order":35,"material":"","type":1,"place":100},{"boxId":"94265280T006878","x":-102.900002,"y":110.750000,"z":-587.250000,"width":17.500000,"height":5.500000,"length":26.000000,"weight":0.200000,"platform":"platform16","order":36,"material":"","type":1,"place":200},{"boxId":"94265280T006880","x":-76.900002,"y":110.750000,"z":-587.250000,"width":17.500000,"height":5.500000,"length":26.000000,"weight":0.200000,"platform":"platform16","order":37,"material":"","type":1,"place":200},{"boxId":"94265280T006884","x":-37.150002,"y":10.500000,"z":-457.250000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":4.720000,"platform":"platform16","order":38,"material":"","type":1,"place":100},{"boxId":"94265280T006882","x":-37.150002,"y":45.500000,"z":-457.250000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":4.720000,"platform":"platform16","order":39,"material":"","type":1,"place":100},{"boxId":"94265280T006883","x":42.500000,"y":53.500000,"z":-326.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":40,"material":"","type":1,"place":200},{"boxId":"94265280T006879","x":42.500000,"y":83.500000,"z":-326.250000,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":41,"material":"","type":1,"place":200},{"boxId":"94265280T006881","x":27.750000,"y":-23.500000,"z":-247.300003,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":42,"material":"","type":1,"place":100},{"boxId":"94265280T006885","x":27.750000,"y":6.500000,"z":-247.300003,"width":59.500000,"height":30.000000,"length":89.000000,"weight":25.120001,"platform":"platform16","order":43,"material":"","type":1,"place":100},{"boxId":"94266160101T770","x":-29.400000,"y":-14.750000,"z":-377.250000,"width":53.000000,"height":30.500000,"length":69.500000,"weight":12.800000,"platform":"platform07","order":44,"material":"","type":1,"place":100},{"boxId":"94266160101T764","x":-29.400000,"y":15.750000,"z":-377.250000,"width":53.000000,"height":30.500000,"length":69.500000,"weight":12.800000,"platform":"platform07","order":45,"material":"","type":1,"place":100},{"boxId":"94266160101T767","x":-29.400000,"y":46.250000,"z":-377.250000,"width":53.000000,"height":30.500000,"length":69.500000,"weight":12.800000,"platform":"platform07","order":46,"material":"","type":1,"place":100},{"boxId":"94266160101T765","x":34.500000,"y":57.299999,"z":-250.300003,"width":73.000000,"height":71.599998,"length":83.000000,"weight":81.000000,"platform":"platform07","order":47,"material":"","type":1,"place":100},{"boxId":"94266160101T768","x":39.500000,"y":-77.699997,"z":-135.300003,"width":73.000000,"height":71.599998,"length":83.000000,"weight":79.000000,"platform":"platform07","order":48,"material":"","type":1,"place":200},{"boxId":"94266160101T771","x":39.500000,"y":-6.100000,"z":-135.300003,"width":73.000000,"height":71.599998,"length":83.000000,"weight":78.400002,"platform":"platform07","order":49,"material":"","type":1,"place":200},{"boxId":"94263800102R057","x":18.500000,"y":-102.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":30.000000,"platform":"platform07","order":50,"material":"","type":1,"place":100},{"boxId":"94263800102R055","x":18.500000,"y":-80.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":30.000000,"platform":"platform07","order":51,"material":"","type":1,"place":100},{"boxId":"94263800102R056","x":18.500000,"y":-58.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":30.000000,"platform":"platform07","order":52,"material":"","type":1,"place":100},{"boxId":"94263800102Q937","x":18.500000,"y":-36.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":28.900000,"platform":"platform07","order":53,"material":"","type":1,"place":100},{"boxId":"94263800102Q938","x":18.500000,"y":-14.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":28.900000,"platform":"platform07","order":54,"material":"","type":1,"place":100},{"boxId":"94263800102Q939","x":18.500000,"y":7.500000,"z":20.200001,"width":41.000000,"height":22.000000,"length":238.000000,"weight":28.900000,"platform":"platform07","order":55,"material":"","type":1,"place":100},{"boxId":"94266160101X855","x":61.750000,"y":-106.500000,"z":15.700000,"width":45.500000,"height":14.000000,"length":229.000000,"weight":14.490000,"platform":"platform07","order":56,"material":"","type":1,"place":100},{"boxId":"94266160101X854","x":61.750000,"y":-92.500000,"z":15.700000,"width":45.500000,"height":14.000000,"length":229.000000,"weight":14.490000,"platform":"platform07","order":57,"material":"","type":1,"place":100},{"boxId":"94263800102R043","x":-64.150002,"y":103.250000,"z":-548.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":58,"material":"","type":1,"place":200},{"boxId":"94263800102Q967","x":-103.150002,"y":103.250000,"z":-518.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":59,"material":"","type":1,"place":100},{"boxId":"94263800102Q997","x":-77.650002,"y":103.250000,"z":-518.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":60,"material":"","type":1,"place":100},{"boxId":"94263800102Q958","x":-52.150002,"y":103.250000,"z":-518.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":61,"material":"","type":1,"place":100},{"boxId":"94263800102R045","x":-98.650002,"y":103.250000,"z":-488.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":62,"material":"","type":1,"place":200},{"boxId":"94263800102R044","x":-64.150002,"y":103.250000,"z":-488.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":63,"material":"","type":1,"place":200},{"boxId":"94263800102R022","x":-23.150000,"y":103.250000,"z":-539.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":64,"material":"","type":1,"place":100},{"boxId":"94263800102R051","x":99.949997,"y":-108.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":65,"material":"","type":1,"place":100},{"boxId":"94263800102Q960","x":99.949997,"y":-108.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":66,"material":"","type":1,"place":100},{"boxId":"94263800102R027","x":99.949997,"y":-108.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.420000,"platform":"platform08","order":67,"material":"","type":1,"place":100},{"boxId":"94263800102R017","x":99.949997,"y":-108.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":68,"material":"","type":1,"place":100},{"boxId":"94263800102Q945","x":99.949997,"y":-99.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":69,"material":"","type":1,"place":100},{"boxId":"94263800102Q986","x":99.949997,"y":-99.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":70,"material":"","type":1,"place":100},{"boxId":"94263800102R003","x":99.949997,"y":-99.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":71,"material":"","type":1,"place":100},{"boxId":"94263800102Q953","x":99.949997,"y":-99.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":72,"material":"","type":1,"place":100},{"boxId":"94263800102Q988","x":99.949997,"y":-89.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":73,"material":"","type":1,"place":100},{"boxId":"94263800102R024","x":99.949997,"y":-89.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":74,"material":"","type":1,"place":100},{"boxId":"94263800102Q972","x":99.949997,"y":-89.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":75,"material":"","type":1,"place":100},{"boxId":"94263800102R053","x":99.949997,"y":-89.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":76,"material":"","type":1,"place":100},{"boxId":"94263800102Q966","x":99.949997,"y":-80.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":77,"material":"","type":1,"place":100},{"boxId":"94263800102R004","x":99.949997,"y":-80.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":78,"material":"","type":1,"place":100},{"boxId":"94263800102Q971","x":99.949997,"y":-80.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":79,"material":"","type":1,"place":100},{"boxId":"94263800102Q991","x":99.949997,"y":-80.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":80,"material":"","type":1,"place":100},{"boxId":"94263800102Q983","x":99.949997,"y":-70.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":81,"material":"","type":1,"place":100},{"boxId":"94263800102Q989","x":99.949997,"y":-70.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":82,"material":"","type":1,"place":100},{"boxId":"94263800102Q952","x":99.949997,"y":-70.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":83,"material":"","type":1,"place":100},{"boxId":"94263800102Q956","x":99.949997,"y":-70.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":84,"material":"","type":1,"place":100},{"boxId":"94263800102Q951","x":99.949997,"y":-61.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":85,"material":"","type":1,"place":100},{"boxId":"94263800102Q976","x":99.949997,"y":-61.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":86,"material":"","type":1,"place":100},{"boxId":"94263800102R035","x":99.949997,"y":-61.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":87,"material":"","type":1,"place":100},{"boxId":"94263800102Q993","x":99.949997,"y":-61.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":88,"material":"","type":1,"place":100},{"boxId":"94263800102R006","x":99.949997,"y":-51.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":89,"material":"","type":1,"place":100},{"boxId":"94263800102Q947","x":99.949997,"y":-51.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":90,"material":"","type":1,"place":100},{"boxId":"94263800102R014","x":99.949997,"y":-51.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.400000,"platform":"platform08","order":91,"material":"","type":1,"place":100},{"boxId":"94263800102R001","x":99.949997,"y":-51.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":92,"material":"","type":1,"place":100},{"boxId":"94263800102R013","x":99.949997,"y":-42.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":93,"material":"","type":1,"place":100},{"boxId":"94263800102Q990","x":99.949997,"y":-42.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":94,"material":"","type":1,"place":100},{"boxId":"94263800102Q949","x":99.949997,"y":-42.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":95,"material":"","type":1,"place":100},{"boxId":"94263800102R042","x":99.949997,"y":-42.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":96,"material":"","type":1,"place":100},{"boxId":"94263800102Q964","x":99.949997,"y":-32.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":97,"material":"","type":1,"place":100},{"boxId":"94263800102Q963","x":99.949997,"y":-32.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":98,"material":"","type":1,"place":100},{"boxId":"94263800102R049","x":99.949997,"y":-32.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":99,"material":"","type":1,"place":100},{"boxId":"94263800102Q977","x":99.949997,"y":-32.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":100,"material":"","type":1,"place":100},{"boxId":"94263800102R005","x":99.949997,"y":-23.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":101,"material":"","type":1,"place":100},{"boxId":"94263800102R015","x":99.949997,"y":-23.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":102,"material":"","type":1,"place":100},{"boxId":"94263800102Q968","x":99.949997,"y":-23.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":103,"material":"","type":1,"place":100},{"boxId":"94263800102R050","x":99.949997,"y":-23.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":104,"material":"","type":1,"place":100},{"boxId":"94263800102R029","x":99.949997,"y":-13.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":105,"material":"","type":1,"place":100},{"boxId":"94263800102R046","x":99.949997,"y":-13.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":106,"material":"","type":1,"place":100},{"boxId":"94263800102R039","x":99.949997,"y":-13.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":107,"material":"","type":1,"place":100},{"boxId":"94263800102R037","x":99.949997,"y":-13.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":108,"material":"","type":1,"place":100},{"boxId":"94263800102Q998","x":99.949997,"y":-4.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":109,"material":"","type":1,"place":100},{"boxId":"94263800102R016","x":99.949997,"y":-4.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":110,"material":"","type":1,"place":100},{"boxId":"94263800102Q999","x":99.949997,"y":-4.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":111,"material":"","type":1,"place":100},{"boxId":"94263800102Q969","x":99.949997,"y":-4.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":112,"material":"","type":1,"place":100},{"boxId":"94263800102Q950","x":99.949997,"y":5.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":113,"material":"","type":1,"place":100},{"boxId":"94263800102Q948","x":99.949997,"y":5.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":114,"material":"","type":1,"place":100},{"boxId":"94263800102Q974","x":99.949997,"y":5.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":115,"material":"","type":1,"place":100},{"boxId":"94263800102Q978","x":99.949997,"y":5.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":116,"material":"","type":1,"place":100},{"boxId":"94263800102R008","x":99.949997,"y":14.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":117,"material":"","type":1,"place":100},{"boxId":"94263800102Q946","x":99.949997,"y":14.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":118,"material":"","type":1,"place":100},{"boxId":"94263800102R026","x":99.949997,"y":14.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":119,"material":"","type":1,"place":100},{"boxId":"94263800102R054","x":99.949997,"y":14.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":120,"material":"","type":1,"place":100},{"boxId":"94263800102Q981","x":99.949997,"y":24.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":121,"material":"","type":1,"place":100},{"boxId":"94263800102Q987","x":99.949997,"y":24.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":122,"material":"","type":1,"place":100},{"boxId":"94263800102Q996","x":99.949997,"y":24.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":123,"material":"","type":1,"place":100},{"boxId":"94263800102R018","x":99.949997,"y":24.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":124,"material":"","type":1,"place":100},{"boxId":"94263800102R038","x":99.949997,"y":33.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":125,"material":"","type":1,"place":100},{"boxId":"94263800102Q995","x":99.949997,"y":33.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":126,"material":"","type":1,"place":100},{"boxId":"94263800102R048","x":99.949997,"y":33.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":127,"material":"","type":1,"place":100},{"boxId":"94263800102Q992","x":99.949997,"y":33.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":128,"material":"","type":1,"place":100},{"boxId":"94263800102R052","x":99.949997,"y":43.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":129,"material":"","type":1,"place":100},{"boxId":"94263800102R023","x":99.949997,"y":43.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":130,"material":"","type":1,"place":100},{"boxId":"94263800102Q994","x":99.949997,"y":43.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":131,"material":"","type":1,"place":100},{"boxId":"94263800102Q982","x":99.949997,"y":43.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":132,"material":"","type":1,"place":100},{"boxId":"94263800102Q985","x":99.949997,"y":52.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":133,"material":"","type":1,"place":100},{"boxId":"94263800102R041","x":99.949997,"y":52.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":134,"material":"","type":1,"place":100},{"boxId":"94263800102R047","x":99.949997,"y":52.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":135,"material":"","type":1,"place":100},{"boxId":"94263800102R034","x":99.949997,"y":52.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":136,"material":"","type":1,"place":100},{"boxId":"94263800102R020","x":99.949997,"y":62.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":137,"material":"","type":1,"place":100},{"boxId":"94263800102Q965","x":99.949997,"y":62.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":138,"material":"","type":1,"place":100},{"boxId":"94263800102R002","x":99.949997,"y":62.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":139,"material":"","type":1,"place":100},{"boxId":"94263800102Q979","x":99.949997,"y":62.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":140,"material":"","type":1,"place":100},{"boxId":"94263800102Q959","x":99.949997,"y":71.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":141,"material":"","type":1,"place":100},{"boxId":"94263800102R000","x":99.949997,"y":71.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":142,"material":"","type":1,"place":100},{"boxId":"94263800102R025","x":99.949997,"y":71.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":143,"material":"","type":1,"place":100},{"boxId":"94263800102Q961","x":99.949997,"y":71.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":144,"material":"","type":1,"place":100},{"boxId":"94263800102R036","x":99.949997,"y":81.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":145,"material":"","type":1,"place":100},{"boxId":"94263800102Q975","x":99.949997,"y":81.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":146,"material":"","type":1,"place":100},{"boxId":"94263800102R030","x":99.949997,"y":81.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":147,"material":"","type":1,"place":100},{"boxId":"94263800102R010","x":99.949997,"y":81.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":148,"material":"","type":1,"place":100},{"boxId":"94263800102R019","x":99.949997,"y":90.750000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":149,"material":"","type":1,"place":100},{"boxId":"94263800102R011","x":99.949997,"y":90.750000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":150,"material":"","type":1,"place":100},{"boxId":"94263800102R028","x":99.949997,"y":90.750000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":151,"material":"","type":1,"place":100},{"boxId":"94263800102R009","x":99.949997,"y":90.750000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":152,"material":"","type":1,"place":100},{"boxId":"94263800102Q957","x":99.949997,"y":100.250000,"z":-498.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":153,"material":"","type":1,"place":100},{"boxId":"94263800102Q973","x":99.949997,"y":100.250000,"z":-464.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":154,"material":"","type":1,"place":100},{"boxId":"94263800102R007","x":99.949997,"y":100.250000,"z":-429.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":155,"material":"","type":1,"place":100},{"boxId":"94263800102Q980","x":99.949997,"y":100.250000,"z":-395.250000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.380000,"platform":"platform08","order":156,"material":"","type":1,"place":100},{"boxId":"94263800102Q970","x":99.949997,"y":-108.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":157,"material":"","type":1,"place":100},{"boxId":"94263800102R021","x":99.949997,"y":-99.250000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":158,"material":"","type":1,"place":100},{"boxId":"94263800102R033","x":99.949997,"y":-89.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":159,"material":"","type":1,"place":100},{"boxId":"94263800102R040","x":99.949997,"y":-80.250000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":160,"material":"","type":1,"place":100},{"boxId":"94263800102Q955","x":99.949997,"y":-70.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":161,"material":"","type":1,"place":100},{"boxId":"94263800102R031","x":99.949997,"y":-61.250000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":162,"material":"","type":1,"place":100},{"boxId":"94263800102Q984","x":99.949997,"y":-51.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":163,"material":"","type":1,"place":100},{"boxId":"94263800102R012","x":99.949997,"y":-42.250000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":164,"material":"","type":1,"place":100},{"boxId":"94263800102Q954","x":99.949997,"y":-32.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":165,"material":"","type":1,"place":100},{"boxId":"94263800102R032","x":99.949997,"y":-23.250000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":166,"material":"","type":1,"place":100},{"boxId":"94263800102Q962","x":99.949997,"y":-13.750000,"z":-360.750000,"width":25.500000,"height":9.500000,"length":34.500000,"weight":0.360000,"platform":"platform08","order":167,"material":"","type":1,"place":100},{"boxId":"942652801019524","x":-87.900002,"y":104.500000,"z":-381.000000,"width":36.000000,"height":14.000000,"length":56.000000,"weight":4.920000,"platform":"platform08","order":168,"material":"","type":1,"place":200},{"boxId":"94266160101Y404","x":51.000000,"y":-58.000000,"z":172.699997,"width":67.000000,"height":111.000000,"length":106.000000,"weight":99.000000,"platform":"platform08","order":169,"material":"","type":1,"place":200},{"boxId":"94266160101Y403","x":34.000000,"y":-51.500000,"z":322.200012,"width":72.000000,"height":124.000000,"length":232.000000,"weight":245.000000,"platform":"platform08","order":170,"material":"","type":1,"place":100},{"boxId":"94266160101Y406","x":38.000000,"y":-71.250000,"z":498.200012,"width":80.000000,"height":84.500000,"length":120.000000,"weight":113.000000,"platform":"platform08","order":171,"material":"","type":1,"place":100},{"boxId":"94266160101Y405","x":38.000000,"y":8.750000,"z":498.200012,"width":80.000000,"height":75.500000,"length":120.000000,"weight":77.000000,"platform":"platform08","order":172,"material":"","type":1,"place":100},{"boxId":"94266160101T769","x":-104.650002,"y":102.250000,"z":-344.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.860000,"platform":"platform09","order":173,"material":"","type":1,"place":100},{"boxId":"94266160101T763","x":-82.150002,"y":102.250000,"z":-344.250000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.840000,"platform":"platform09","order":174,"material":"","type":1,"place":100},{"boxId":"94266160101T766","x":-104.650002,"y":102.250000,"z":-306.750000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.840000,"platform":"platform09","order":175,"material":"","type":1,"place":100},{"boxId":"94262500102E111","x":-82.150002,"y":102.250000,"z":-306.750000,"width":22.500000,"height":9.500000,"length":37.500000,"weight":0.450000,"platform":"platform09","order":176,"material":"","type":1,"place":100},{"boxId":"94262500102C490","x":-96.650002,"y":102.500000,"z":-270.250000,"width":35.500000,"height":10.000000,"length":38.500000,"weight":0.940000,"platform":"platform09","order":177,"material":"","type":1,"place":200},{"boxId":"94262500102C518","x":-37.150002,"y":80.500000,"z":-457.250000,"width":37.500000,"height":35.000000,"length":37.500000,"weight":7.100000,"platform":"platform09","order":178,"material":"","type":1,"place":100},{"boxId":"94262500102C491","x":-36.650002,"y":103.000000,"z":-458.250000,"width":35.500000,"height":10.000000,"length":38.500000,"weight":0.920000,"platform":"platform09","order":179,"material":"","type":1,"place":200},{"boxId":"94262500102C470","x":-29.650000,"y":71.750000,"z":-390.750000,"width":42.500000,"height":20.500000,"length":52.500000,"weight":7.160000,"platform":"platform09","order":180,"material":"","type":1,"place":200},{"boxId":"94262500102C563","x":-37.150002,"y":90.750000,"z":-393.750000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":5.060000,"platform":"platform09","order":181,"material":"","type":1,"place":200},{"boxId":"94262500102C492","x":-37.150002,"y":-21.250000,"z":-324.250000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":5.040000,"platform":"platform09","order":182,"material":"","type":1,"place":200},{"boxId":"94262500102C472","x":-37.150002,"y":-3.750000,"z":-324.250000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":4.400000,"platform":"platform09","order":183,"material":"","type":1,"place":200},{"boxId":"94262500102C564","x":-37.150002,"y":13.750000,"z":-324.250000,"width":36.500000,"height":17.500000,"length":37.500000,"weight":4.400000,"platform":"platform09","order":184,"material":"","type":1,"place":200},{"boxId":"94262500102C390","x":-38.799999,"y":-24.000000,"z":-272.899994,"width":34.200001,"height":12.000000,"length":66.199997,"weight":3.120000,"platform":"platform09","order":185,"material":"","type":1,"place":100},{"boxId":"94262500102A018","x":-38.799999,"y":-12.000000,"z":-272.899994,"width":34.200001,"height":12.000000,"length":66.199997,"weight":3.100000,"platform":"platform09","order":186,"material":"","type":1,"place":100},{"boxId":"94266160101X853","x":38.000000,"y":78.750000,"z":498.200012,"width":80.000000,"height":64.500000,"length":120.000000,"weight":63.000000,"platform":"platform09","order":187,"material":"","type":1,"place":100},{"boxId":"942652801019432","x":-60.900002,"y":-72.150002,"z":-183.000000,"width":110.000000,"height":82.699997,"length":110.000000,"weight":156.500000,"platform":"platform09","order":188,"material":"","type":1,"place":100},{"boxId":"942652801019128","x":-71.900002,"y":-1.550000,"z":-210.000000,"width":56.000000,"height":58.500000,"length":88.000000,"weight":43.000000,"platform":"platform09","order":189,"material":"","type":1,"place":200},{"boxId":"94262500102D953","x":-62.900002,"y":-92.000000,"z":-81.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":64.000000,"platform":"platform22","order":190,"material":"","type":1,"place":200},{"boxId":"94262500102D950","x":-62.900002,"y":-49.000000,"z":-81.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":64.000000,"platform":"platform22","order":191,"material":"","type":1,"place":200},{"boxId":"94262500102D952","x":-62.900002,"y":-6.000000,"z":-81.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":192,"material":"","type":1,"place":200},{"boxId":"94262500102D640","x":-62.900002,"y":37.000000,"z":-81.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":193,"material":"","type":1,"place":200},{"boxId":"94262500102D954","x":-62.900002,"y":80.000000,"z":-81.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":194,"material":"","type":1,"place":200},{"boxId":"94262500102D955","x":-62.900002,"y":-92.000000,"z":11.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":195,"material":"","type":1,"place":200},{"boxId":"94262500102D956","x":-62.900002,"y":-49.000000,"z":11.500000,"width":93.000000,"height":43.000000,"length":106.000000,"weight":63.500000,"platform":"platform22","order":196,"material":"","type":1,"place":200},{"boxId":"942652801018785","x":-65.400002,"y":-22.650000,"z":100.000000,"width":101.000000,"height":181.699997,"length":84.000000,"weight":184.600006,"platform":"platform06","order":197,"material":"","type":1,"place":100},{"boxId":"942652801018783","x":-65.400002,"y":-22.650000,"z":184.000000,"width":101.000000,"height":181.699997,"length":84.000000,"weight":184.000000,"platform":"platform06","order":198,"material":"","type":1,"place":100},{"boxId":"942652801019129","x":-65.400002,"y":-22.650000,"z":268.000000,"width":101.000000,"height":181.699997,"length":84.000000,"weight":183.800003,"platform":"platform06","order":199,"material":"","type":1,"place":100},{"boxId":"942652801018784","x":-65.400002,"y":-22.650000,"z":352.000000,"width":101.000000,"height":181.699997,"length":84.000000,"weight":183.199997,"platform":"platform06","order":200,"material":"","type":1,"place":100},{"boxId":"942652801018782","x":-65.400002,"y":-22.650000,"z":436.000000,"width":101.000000,"height":181.699997,"length":84.000000,"weight":183.199997,"platform":"platform06","order":201,"material":"","type":1,"place":100},{"boxId":"942627601023546","x":-74.449997,"y":-75.599998,"z":508.350006,"width":60.700001,"height":75.800003,"length":82.900002,"weight":59.099998,"platform":"platform20","order":202,"material":"","type":1,"place":200},{"boxId":"942627601023545","x":-74.449997,"y":0.200000,"z":508.350006,"width":60.700001,"height":75.800003,"length":82.900002,"weight":59.000000,"platform":"platform20","order":203,"material":"","type":1,"place":200},{"boxId":"94262030100T713","x":-74.400002,"y":89.699997,"z":94.000000,"width":72.000000,"height":43.000000,"length":83.000000,"weight":38.500000,"platform":"platform10","order":204,"material":"","type":1,"place":200},{"boxId":"94262030100T714","x":-89.400002,"y":85.949997,"z":149.000000,"width":38.000000,"height":35.500000,"length":53.000000,"weight":5.000000,"platform":"platform10","order":205,"material":"","type":1,"place":200}]';
+			var jsonstr2 = '{"container_length":1192.000000,"container_width":231.800003,"container_height":227.000000,"container_max_load":23000.000000,"container_type_name":"40GP"}'
+            var objectArray= JSON.parse(jsonstr);
+			var truckJsonObj = JSON.parse(jsonstr2);
+            var container, stats;
+            var camera, controls, scene, projector, renderer;
+            var objects = [], plane;
+            var mouse = new THREE.Vector2(), offset = new THREE.Vector3(), INTERSECTED, SELECTED; 
+            init();
+            animate();
+            function init() {
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+                camera.position.x = -600;
+                camera.position.y = 400;
+                camera.position.z = 1000;
+                controls = new THREE.TrackballControls( camera );
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+                controls.noZoom = false;
+                controls.noPan = true;
+                controls.staticMoving = false;
+                controls.dynamicDampingFactor = 0.3;
+                scene = new THREE.Scene();
+                var ambientLight = new THREE.AmbientLight( Math.random() *0xffffff );
+                scene.add( ambientLight );
+                var directionalLight = new THREE.DirectionalLight( Math.random() * 0xffffff );
+                directionalLight.position.set( 0, 1, 0 );
+                scene.add( directionalLight );
+                var pointLight = new THREE.PointLight( 0xff0000, 1, 500 );
+                pointLight.position.set( 0, 0, -200 );
+                scene.add( pointLight );
+
+                container_length = truckJsonObj.container_length;
+                container_width = truckJsonObj.container_width;
+                container_height = truckJsonObj.container_height;
+                var cube_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( container_width, container_height, container_length, 1,1,1 ), 
+                    new THREE.MeshBasicMaterial( { color:0xefb73e, wireframe:true } )
+                );
+                cube_1.position.x = 0;
+                cube_1.position.y = 0;
+                cube_1.position.z = 0;
+                scene.add( cube_1 );
+
+                truck_head_length = 145;
+                var truck_head_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 200, 100, truck_head_length, 1, 1, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_1.position.x = 0;
+                truck_head_1.position.y = -50;
+                truck_head_1.position.z = -(container_length/2 + truck_head_length/2);
+                scene.add( truck_head_1 );
+                
+                truck_head_length_2 = 80;
+                var truck_head_2 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 170, 60, truck_head_length_2, 1, 0, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_2.position.x = 0;
+                truck_head_2.position.y = 30;
+                truck_head_2.position.z = -(container_length/2 + truck_head_length_2/2);
+                scene.add( truck_head_2 );
+                
+                truck_head_chimney_radius = 7;
+                var truck_head_chimney1 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney1.position.x = 100;
+                truck_head_chimney1.position.y = 50;
+                truck_head_chimney1.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney1 );
+                
+                var truck_head_chimney2 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney2.position.x = -100;
+                truck_head_chimney2.position.y = 50;
+                truck_head_chimney2.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney2 );
+        
+                var truck_wheel_1 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_1.position.x = 110;
+                truck_wheel_1.position.y = -100;
+                truck_wheel_1.position.z = -(container_length/2 + truck_head_length_2/2 + 20) ;
+                truck_wheel_1.rotation.x = 0;
+                truck_wheel_1.rotation.y = 0;
+                truck_wheel_1.rotation.z = 1.6;
+                scene.add( truck_wheel_1 );
+                
+                var truck_wheel_2 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_2.position.x = -110;
+                truck_wheel_2.position.y = -100;
+                truck_wheel_2.position.z = -(container_length/2 + truck_head_length_2/2 + 20);
+                truck_wheel_2.rotation.x = 0;
+                truck_wheel_2.rotation.y = 0;
+                truck_wheel_2.rotation.z = 1.6;
+                scene.add( truck_wheel_2 );
+
+                offset_2 = -240;
+                var truck_wheel_5 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_5.position.x = container_width/2 + 5;
+                truck_wheel_5.position.y = -100;
+                truck_wheel_5.position.z = (container_length/2 + truck_head_length_2/2 + offset_2) ;
+                truck_wheel_5.rotation.x = 0;
+                truck_wheel_5.rotation.y = 0;
+                truck_wheel_5.rotation.z = 1.6;
+                scene.add( truck_wheel_5 );
+
+                var truck_wheel_6 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_6.position.x = -container_width/2 - 5;
+                truck_wheel_6.position.y = -100;
+                truck_wheel_6.position.z = (container_length/2 + truck_head_length_2/2 + offset_2);
+                truck_wheel_6.rotation.x = 0;
+                truck_wheel_6.rotation.y = 0;
+                truck_wheel_6.rotation.z = 1.6;
+                scene.add( truck_wheel_6 );
+
+                for (var i in objectArray) {
+                    if (objectArray[i].type==2) {
+						var cylinderTopR = objectArray[i].length / 2;
+						var cylinderHeight = objectArray[i].height;
+						if (objectArray[i].place == 1 || objectArray[i].place == 2)
+						{
+							cylinderHeight = objectArray[i].width;
+						}
+						
+                        var object2 = new THREE.Mesh(
+						    new THREE.CylinderGeometry(cylinderTopR, cylinderTopR, cylinderHeight, 60),
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object2.position.x = objectArray[i].x;
+                        object2.position.y = objectArray[i].y;
+                        object2.position.z = objectArray[i].z;
+                        if (objectArray[i].place==1) {
+                            object2.rotation.z = 55;
+                        }
+                        if (objectArray[i].place==2) {
+                            object2.rotation.x = 55;
+                        }
+                        object2.width = objectArray[i].width;
+                        object2.height = objectArray[i].height;
+                        object2.length = objectArray[i].length;
+                        object2.weight = objectArray[i].weight;
+                        object2.platform = objectArray[i].platform;
+                        object2.order = objectArray[i].order;
+                        object2.materialInfo = objectArray[i].material;
+                        object2.boxId = objectArray[i].boxId;
+                        object2.type = objectArray[i].type;
+                        object2.place = objectArray[i].place;
+                        scene.add( object2 );
+                        objects.push( object2 );
+                    }
+                    if (objectArray[i].type==1) {
+						if (objectArray[i].place == 200)
+						{
+							var box_length = objectArray[i].width;
+                            var box_width = objectArray[i].length;
+						}
+						else
+						{
+							var box_length = objectArray[i].length;
+							var box_width = objectArray[i].width;
+						}
+						var box_height = objectArray[i].height;
+                        var object = new THREE.Mesh(
+                            new THREE.BoxGeometry( box_width, box_height, box_length, 1, 1, 1 ), 
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object.position.x = objectArray[i].x;
+                        object.position.y = objectArray[i].y;
+                        object.position.z = objectArray[i].z;
+						object.length = objectArray[i].length;
+						object.width = objectArray[i].width;
+						object.height = objectArray[i].height;
+                        object.weight = objectArray[i].weight;
+                        object.platform = objectArray[i].platform;
+                        object.order = objectArray[i].order;
+                        object.materialInfo = objectArray[i].material;
+                        object.boxId = objectArray[i].boxId;
+                        object.type = objectArray[i].type;
+                        object.place = objectArray[i].place;
+                        scene.add( object );
+                        objects.push( object );
+                    }
+                }
+
+                plane = new THREE.Mesh(
+                    new THREE.PlaneGeometry( 2000, 2000, 8, 8 ),
+                    new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } )
+                );
+                plane.visible = true;
+                scene.add( plane );
+                projector = new THREE.Projector();
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.sortObjects = false;
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer.shadowMapEnabled = true;
+                renderer.shadowMapType = THREE.PCFShadowMap;
+                container.appendChild( renderer.domElement );
+
+                stats = new Stats();
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.top = '0px';
+                container.appendChild( stats.domElement );
+
+                window.addEventListener( 'resize', onWindowResize, false );
+                renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+                renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+                renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+            }
+
+            function onDocumentMouseMove( event ) {
+                event.preventDefault();
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    if ( INTERSECTED != intersects[ 0 ].object ) {
+                        INTERSECTED = intersects[ 0 ].object;
+                        plane.position.copy( INTERSECTED.position );
+                        plane.lookAt( camera.position );
+                    }
+                    container.style.cursor = 'pointer';
+                } else {
+                    container.style.cursor = 'auto';
+                }
+            }
+
+            function onDocumentMouseDown( event ) {
+                event.preventDefault();
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    controls.enabled = false;  
+                    SELECTED = intersects[ 0 ].object;
+                    var info = '<B>' + 
+                        'boxId: ' + SELECTED.boxId +
+                        '</br> x: ' + SELECTED.position.x + 
+                        '</br> y: ' + SELECTED.position.y + 
+                        '</br> z: ' + SELECTED.position.z + 
+                        '</br> width: ' + SELECTED.width + 
+                        '</br> height: ' + SELECTED.height + 
+                        '</br> length: ' + SELECTED.length + 
+                        '</br> weight: ' + SELECTED.weight +
+                        '</br> platform: ' + SELECTED.platform +
+                        '</br> order: ' + SELECTED.order +
+                        '</br> material: ' + SELECTED.materialInfo + 
+                        '</br> type: ' + SELECTED.type + 
+                        '</br> place: ' + SELECTED.place + 
+                        '</B>' +
+                        '</br>' + 
+                        '--------------------------' + 
+                        '</br>' +
+                        'type(1:箱体 2:圆柱体)' +
+                        '</br>' +
+                        'place(1:品字型 2:田字型)';
+                    $("#objectInfo").html(info);
+                }
+            }
+
+            function onDocumentMouseUp( event ) {
+                event.preventDefault();
+                controls.enabled = true;
+                if ( INTERSECTED ) {
+                    plane.position.copy( INTERSECTED.position );
+                    SELECTED = null;
+                }
+                container.style.cursor = 'auto';
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+            }
+
+            function animate() {
+                requestAnimationFrame( animate );
+                render();
+                stats.update();
+            }
+
+            function render() {
+                controls.update();
+                renderer.render( scene, camera );
+            }
+
+        </script>
+        <div id="objectInfo" class="a2"><br/>点击物体获取相关属性</div>
+        <style>
+            .a2{position:absolute; left:20px; top:50px; bottom:0px; width:180px; height:250px; z-index:9999; background: #00FFFF; font-weight:bold; }
+        </style>
+    </body>
+</html>
