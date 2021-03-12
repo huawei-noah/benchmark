@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+            body {
+                font-family: Monospace;
+                background-color: #f0f0f0;
+                margin: 0px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="https://cdn.bootcdn.net/ajax/libs/three.js/73/three.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/tween.js/0.11.0/Tween.min.js"></script>
+		<script src="https://unpkg.com/three@0.73.1/examples/js/controls/TrackballControls.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/stats.js/10/Stats.min.js"></script>
+        <script>
+
+            var jsonstr = 'BOX_REPLACE_CONTENT';
+			var jsonstr2 = 'TRUCK_REPLACE_CONTENT'
+            var objectArray= JSON.parse(jsonstr);
+			var truckJsonObj = JSON.parse(jsonstr2);
+            var container, stats;
+            var camera, controls, scene, projector, renderer;
+            var objects = [], plane;
+            var mouse = new THREE.Vector2(), offset = new THREE.Vector3(), INTERSECTED, SELECTED; 
+            init();
+            animate();
+            function init() {
+                container = document.createElement( 'div' );
+                document.body.appendChild( container );
+                camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+                camera.position.x = -600;
+                camera.position.y = 400;
+                camera.position.z = 1000;
+                controls = new THREE.TrackballControls( camera );
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+                controls.noZoom = false;
+                controls.noPan = true;
+                controls.staticMoving = false;
+                controls.dynamicDampingFactor = 0.3;
+                scene = new THREE.Scene();
+                var ambientLight = new THREE.AmbientLight( Math.random() *0xffffff );
+                scene.add( ambientLight );
+                var directionalLight = new THREE.DirectionalLight( Math.random() * 0xffffff );
+                directionalLight.position.set( 0, 1, 0 );
+                scene.add( directionalLight );
+                var pointLight = new THREE.PointLight( 0xff0000, 1, 500 );
+                pointLight.position.set( 0, 0, -200 );
+                scene.add( pointLight );
+
+                container_length = truckJsonObj.container_length;
+                container_width = truckJsonObj.container_width;
+                container_height = truckJsonObj.container_height;
+                var cube_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( container_width, container_height, container_length, 1,1,1 ), 
+                    new THREE.MeshBasicMaterial( { color:0xefb73e, wireframe:true } )
+                );
+                cube_1.position.x = 0;
+                cube_1.position.y = 0;
+                cube_1.position.z = 0;
+                scene.add( cube_1 );
+
+                truck_head_length = 145;
+                var truck_head_1 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 200, 100, truck_head_length, 1, 1, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_1.position.x = 0;
+                truck_head_1.position.y = -50;
+                truck_head_1.position.z = -(container_length/2 + truck_head_length/2);
+                scene.add( truck_head_1 );
+                
+                truck_head_length_2 = 80;
+                var truck_head_2 = new THREE.Mesh(
+                    new THREE.BoxGeometry( 170, 60, truck_head_length_2, 1, 0, 5 ), 
+                    new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe:true } )
+                );
+                truck_head_2.position.x = 0;
+                truck_head_2.position.y = 30;
+                truck_head_2.position.z = -(container_length/2 + truck_head_length_2/2);
+                scene.add( truck_head_2 );
+                
+                truck_head_chimney_radius = 7;
+                var truck_head_chimney1 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney1.position.x = 100;
+                truck_head_chimney1.position.y = 50;
+                truck_head_chimney1.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney1 );
+                
+                var truck_head_chimney2 = new THREE.Mesh(
+                    new THREE.CylinderGeometry( truck_head_chimney_radius, truck_head_chimney_radius, 300, 20 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_head_chimney2.position.x = -100;
+                truck_head_chimney2.position.y = 50;
+                truck_head_chimney2.position.z = -(container_length/2 + truck_head_chimney_radius/2);
+                scene.add( truck_head_chimney2 );
+        
+                var truck_wheel_1 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_1.position.x = 110;
+                truck_wheel_1.position.y = -100;
+                truck_wheel_1.position.z = -(container_length/2 + truck_head_length_2/2 + 20) ;
+                truck_wheel_1.rotation.x = 0;
+                truck_wheel_1.rotation.y = 0;
+                truck_wheel_1.rotation.z = 1.6;
+                scene.add( truck_wheel_1 );
+                
+                var truck_wheel_2 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_2.position.x = -110;
+                truck_wheel_2.position.y = -100;
+                truck_wheel_2.position.z = -(container_length/2 + truck_head_length_2/2 + 20);
+                truck_wheel_2.rotation.x = 0;
+                truck_wheel_2.rotation.y = 0;
+                truck_wheel_2.rotation.z = 1.6;
+                scene.add( truck_wheel_2 );
+
+                offset_2 = -240;
+                var truck_wheel_5 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_5.position.x = container_width/2 + 5;
+                truck_wheel_5.position.y = -100;
+                truck_wheel_5.position.z = (container_length/2 + truck_head_length_2/2 + offset_2) ;
+                truck_wheel_5.rotation.x = 0;
+                truck_wheel_5.rotation.y = 0;
+                truck_wheel_5.rotation.z = 1.6;
+                scene.add( truck_wheel_5 );
+
+                var truck_wheel_6 = new THREE.Mesh(new THREE.CylinderGeometry( 50, 50, 20, 50 ), 
+                    new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:true } )
+                );
+                truck_wheel_6.position.x = -container_width/2 - 5;
+                truck_wheel_6.position.y = -100;
+                truck_wheel_6.position.z = (container_length/2 + truck_head_length_2/2 + offset_2);
+                truck_wheel_6.rotation.x = 0;
+                truck_wheel_6.rotation.y = 0;
+                truck_wheel_6.rotation.z = 1.6;
+                scene.add( truck_wheel_6 );
+
+                for (var i in objectArray) {
+                    if (objectArray[i].type==2) {
+						var cylinderTopR = objectArray[i].length / 2;
+						var cylinderHeight = objectArray[i].height;
+						if (objectArray[i].place == 1 || objectArray[i].place == 2)
+						{
+							cylinderHeight = objectArray[i].width;
+						}
+						
+                        var object2 = new THREE.Mesh(
+						    new THREE.CylinderGeometry(cylinderTopR, cylinderTopR, cylinderHeight, 60),
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object2.position.x = objectArray[i].x;
+                        object2.position.y = objectArray[i].y;
+                        object2.position.z = objectArray[i].z;
+                        if (objectArray[i].place==1) {
+                            object2.rotation.z = 55;
+                        }
+                        if (objectArray[i].place==2) {
+                            object2.rotation.x = 55;
+                        }
+                        object2.width = objectArray[i].width;
+                        object2.height = objectArray[i].height;
+                        object2.length = objectArray[i].length;
+                        object2.weight = objectArray[i].weight;
+                        object2.platform = objectArray[i].platform;
+                        object2.order = objectArray[i].order;
+                        object2.materialInfo = objectArray[i].material;
+                        object2.boxId = objectArray[i].boxId;
+                        object2.type = objectArray[i].type;
+                        object2.place = objectArray[i].place;
+                        scene.add( object2 );
+                        objects.push( object2 );
+                    }
+                    if (objectArray[i].type==1) {
+						if (objectArray[i].place == 200)
+						{
+							var box_length = objectArray[i].width;
+                            var box_width = objectArray[i].length;
+						}
+						else
+						{
+							var box_length = objectArray[i].length;
+							var box_width = objectArray[i].width;
+						}
+						var box_height = objectArray[i].height;
+                        var object = new THREE.Mesh(
+                            new THREE.BoxGeometry( box_width, box_height, box_length, 1, 1, 1 ), 
+                            new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff , wireframe:false } ) 
+                        ); 
+                        object.position.x = objectArray[i].x;
+                        object.position.y = objectArray[i].y;
+                        object.position.z = objectArray[i].z;
+						object.length = objectArray[i].length;
+						object.width = objectArray[i].width;
+						object.height = objectArray[i].height;
+                        object.weight = objectArray[i].weight;
+                        object.platform = objectArray[i].platform;
+                        object.order = objectArray[i].order;
+                        object.materialInfo = objectArray[i].material;
+                        object.boxId = objectArray[i].boxId;
+                        object.type = objectArray[i].type;
+                        object.place = objectArray[i].place;
+                        scene.add( object );
+                        objects.push( object );
+                    }
+                }
+
+                plane = new THREE.Mesh(
+                    new THREE.PlaneGeometry( 2000, 2000, 8, 8 ),
+                    new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } )
+                );
+                plane.visible = true;
+                scene.add( plane );
+                projector = new THREE.Projector();
+                renderer = new THREE.WebGLRenderer( { antialias: true } );
+                renderer.sortObjects = false;
+                renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer.shadowMapEnabled = true;
+                renderer.shadowMapType = THREE.PCFShadowMap;
+                container.appendChild( renderer.domElement );
+
+                stats = new Stats();
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.top = '0px';
+                container.appendChild( stats.domElement );
+
+                window.addEventListener( 'resize', onWindowResize, false );
+                renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+                renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+                renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+            }
+
+            function onDocumentMouseMove( event ) {
+                event.preventDefault();
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    if ( INTERSECTED != intersects[ 0 ].object ) {
+                        INTERSECTED = intersects[ 0 ].object;
+                        plane.position.copy( INTERSECTED.position );
+                        plane.lookAt( camera.position );
+                    }
+                    container.style.cursor = 'pointer';
+                } else {
+                    container.style.cursor = 'auto';
+                }
+            }
+
+            function onDocumentMouseDown( event ) {
+                event.preventDefault();
+                var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+                projector.unprojectVector( vector, camera );
+                var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+                var intersects = raycaster.intersectObjects( objects );
+                if ( intersects.length > 0 ) {
+                    controls.enabled = false;  
+                    SELECTED = intersects[ 0 ].object;
+                    var info = '<B>' + 
+                        'boxId: ' + SELECTED.boxId +
+                        '</br> x: ' + SELECTED.position.x + 
+                        '</br> y: ' + SELECTED.position.y + 
+                        '</br> z: ' + SELECTED.position.z + 
+                        '</br> width: ' + SELECTED.width + 
+                        '</br> height: ' + SELECTED.height + 
+                        '</br> length: ' + SELECTED.length + 
+                        '</br> weight: ' + SELECTED.weight +
+                        '</br> platform: ' + SELECTED.platform +
+                        '</br> order: ' + SELECTED.order +
+                        '</br> material: ' + SELECTED.materialInfo + 
+                        '</br> type: ' + SELECTED.type + 
+                        '</br> place: ' + SELECTED.place + 
+                        '</B>' +
+                        '</br>' + 
+                        '--------------------------' + 
+                        '</br>' +
+                        'type(1:箱体 2:圆柱体)' +
+                        '</br>' +
+                        'place(1:品字型 2:田字型)';
+                    $("#objectInfo").html(info);
+                }
+            }
+
+            function onDocumentMouseUp( event ) {
+                event.preventDefault();
+                controls.enabled = true;
+                if ( INTERSECTED ) {
+                    plane.position.copy( INTERSECTED.position );
+                    SELECTED = null;
+                }
+                container.style.cursor = 'auto';
+            }
+
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+            }
+
+            function animate() {
+                requestAnimationFrame( animate );
+                render();
+                stats.update();
+            }
+
+            function render() {
+                controls.update();
+                renderer.render( scene, camera );
+            }
+
+        </script>
+        <div id="objectInfo" class="a2"><br/>点击物体获取相关属性</div>
+        <style>
+            .a2{position:absolute; left:20px; top:50px; bottom:0px; width:180px; height:250px; z-index:9999; background: #00FFFF; font-weight:bold; }
+        </style>
+    </body>
+</html>
