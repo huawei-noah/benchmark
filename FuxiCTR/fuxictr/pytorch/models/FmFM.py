@@ -1,10 +1,20 @@
-""" 
+# Copyright (C) 2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the MIT license.
+
+# This program is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the MIT License for more details.
+
+""" This is the implementation of the following paper:
     [WWW2021] FM2: Field-matrixed Factorization Machines for Recommender Systems
 """
 import torch
 from torch import nn
 from .base_model import BaseModel
 from ..layers import EmbeddingLayer_v3, LR_Layer
+
 
 class FmFM(BaseModel):
     def __init__(self, 
@@ -51,9 +61,9 @@ class FmFM(BaseModel):
         upper_tensor = torch.masked_select(field_wise_emb, self.upper_triange_mask.unsqueeze(-1)) \
                             .view(-1, self.interact_dim, self.embedding_dim)
         if self.field_interaction_type == "vectorized":
-            upper_tensor = self.interaction_weight * upper_tensor
+            upper_tensor = upper_tensor * self.interaction_weight
         elif self.field_interaction_type == "matrixed":
-            upper_tensor = torch.matmul(self.interaction_weight, upper_tensor.unsqueeze(-1)).squeeze(-1)
+            upper_tensor = torch.matmul(upper_tensor.unsqueeze(2), self.interaction_weight).squeeze(2)
         lower_tensor = torch.masked_select(field_wise_emb.transpose(1, 2), self.lower_triange_mask.t().unsqueeze(-1)) \
                             .view(-1, self.interact_dim, self.embedding_dim)
         y_pred = (upper_tensor * lower_tensor).flatten(start_dim=1).sum(dim=-1, keepdim=True)
