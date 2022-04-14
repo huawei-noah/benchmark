@@ -5,6 +5,8 @@ This repository contains some benchmark related code released by Huawei Noah's A
 
 + [packing_utilities](./packing_utilities): Demo code to assistant the participants of the EMO 2021 Huawei logistics competition.
 
++ [TeleGraph](./TeleGraph): A Benchmark Dataset for Hierarchical Link Prediction.
+
 
 
 
