@@ -2,9 +2,10 @@
 
 Click-through rate (CTR) prediction is an critical task for many industrial applications such as online advertising, recommender systems, and sponsored search. FuxiCTR provides an open-source library for CTR prediction, with stunning features in configurability, tunability, and reproducibility. 
 
-This repo is the official code release of FuxiCTR used in the following benchmarking paper: 
+If you find FuxiCTR useful in your research, please kindly cite the following papers: 
 
-+ Jieming Zhu, Jinyang Liu, Shuai Yang, Qi Zhang, Xiuqiang He, [Open Benchmarking for Click-Through Rate Prediction](https://arxiv.org/abs/2009.05794), in Proceedings of the 30th {ACM} International Conference on Information and Knowledge Management (CIKM), 2021.
++ Jieming Zhu, Jinyang Liu, Shuai Yang, Qi Zhang, Xiuqiang He. [Open Benchmarking for Click-Through Rate Prediction](https://arxiv.org/abs/2009.05794), in Proceedings of the 30th ACM International Conference on Information and Knowledge Management (CIKM), 2021.
++ Jieming Zhu, Kelong Mao, Quanyu Dai, Liangcai Su, Rong Ma, Jinyang Liu, Guohao Cai, Zhicheng Dou, Xi Xiao, Rui Zhang. [BARS: Towards Open Benchmarking for Recommender Systems](https://openbenchmark.github.io), in Proceedings of the 45th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR), 2022.
 
 
 ## Model List
@@ -38,6 +39,7 @@ This repo is the official code release of FuxiCTR used in the following benchmar
 | WSDM'20 | [InterHAt](./fuxictr/pytorch/models/InterHAt.py) | [Interpretable Click-through Rate Prediction through Hierarchical Attention](https://dl.acm.org/doi/10.1145/3336191.3371785) | :heavy_check_mark: |
 | DLP-KDD'20 | [FLEN](./fuxictr/pytorch/models/FLEN.py) | [FLEN: Leveraging Field for Scalable CTR Prediction](https://arxiv.org/abs/1911.04690) | :heavy_check_mark: |
 | WWW'21 | [FmFM](./fuxictr/pytorch/models/FmFM.py) | [FM^2: Field-matrixed Factorization Machines for Recommender Systems](https://arxiv.org/abs/2102.12994) | :heavy_check_mark: |
+| IJCAI'21 | [UNBERT](./model_zoo/UNBERT) | [UNBERT: User-News Matching BERT for News Recommendation](https://www.ijcai.org/proceedings/2021/0462.pdf) | :heavy_check_mark: |
 
 ## Installation
 
