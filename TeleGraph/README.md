@@ -12,8 +12,8 @@ The repository contains the code and dataset for paper "TeleGraph: A Benchmark D
 
 ## Data
 
- * TeleGraph.gpickle is an attributed telecom network as illustructed in below:
-<img src="https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG" alt="telegraph"  align="middle"  width=40% height=40%>
+ * TeleGraph.gpickle is an attributed telecom network with three type of devices and 240 types of alarms as sketeched in below:
+<img src="https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG" alt="telegraph"  align="center"  width=40% height=40%>
  
  
  
