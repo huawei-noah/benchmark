@@ -1,5 +1,9 @@
 # TeleGraph: A Benchmark Dataset for Hierarchical Link Prediction.
-The repository contains the code and dataset for paper "TeleGraph: A Benchmark Dataset for Hierarchical Link Prediction" accepted by WebConf GLB 2022.
+The repository contains the code and dataset for paper "TeleGraph: A Benchmark Dataset for Hierarchical Link Prediction" accepted by WebConf GLB 2022. The paper is avaible at https://arxiv.org/abs/2204.07703
+
+* Link prediction is a key problem for network-structured data, attracting considerable research efforts owing to its diverse applications. 
+The current link prediction methods focus on general networks and are overly dependent on either the closed triangular structure
+of networks or node attributes. Their performance on sparse or highly hierarchical networks has not been well studied.  On the other hand,   the available tree-like benchmark datasets are either simulated, with limited node information, or small in scale. To bridge this gap, we present a new benchmark dataset *TeleGraph* , a highly sparse and hierarchical telecommunication network associated with rich node attributes, for assessing and fostering the link inference techniques. 
 
 ## Requirements:
 * torch
@@ -10,8 +14,14 @@ The repository contains the code and dataset for paper "TeleGraph: A Benchmark D
 
 ## Data
 
- TeleGraph.gpickle is an attributed telecom network as illustructed 
- ![img](https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG)
+ * TeleGraph.gpickle is an attributed telecom network as illustructed in below:
+<img src="https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG" alt="telegraph"  align="middle"  width=40% height=40%>
+ 
+ 
+ 
+  
+ 
+ * unzip the TELECOM.zip to get telecom_graph.pt in which each node is associated with an 1x 240 feature vector regarding the alarm occoured or not. 
 
 
 ## Runs:
