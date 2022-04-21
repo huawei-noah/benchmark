@@ -11,7 +11,7 @@ The repository contains the code and dataset for paper "TeleGraph: A Benchmark D
 ## Data
 
  TeleGraph.gpickle is an attributed telecom network as illustructed 
- ![img](https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG)
+ ![img](https://github.com/huawei-noah/benchmark/blob/main/TeleGraph/alarmGraph.PNG){ width=60%,height:30px }
 
 
 ## Runs:
