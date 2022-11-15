@@ -1,0 +1,50 @@
+model:
+  backbone:
+    class_path: src.model.BERT
+    init_args:
+      max_len: 50
+      d_model: 32
+      n_head: 2
+      n_b: 4
+      dropout: 0.1
+      n_layer: 2
+      num_items: 22734
+      battn: True
+      bpff: True
+      brpb: True
+  b_head: True
+
+data:
+  dataset_code: 'yelp'
+  target_behavior: 'pos'
+  multi_behavior: True
+  min_uc: 3
+  num_items: 22734
+  max_len: 50
+  mask_prob: 0.3
+  num_workers: 4
+  train_negative_sampler_code: random_train
+  train_negative_sample_size: 100
+  val_negative_sampler_code: random
+  val_negative_sample_size: 99
+  train_batch_size: 128
+  val_batch_size: 128
+  predict_only_target: False
+
+trainer:
+  default_root_dir: logs/yelp/full-neg
+  callbacks:
+    - class_path: pytorch_lightning.callbacks.EarlyStopping
+      init_args:
+        monitor: 'Val:NDCG@10'
+        patience: 50
+        mode: max  
+  gpus: '1'
+  accelerator: ddp
+seed_everything: 42
+
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 0.001
+    weight_decay: 0.000001
