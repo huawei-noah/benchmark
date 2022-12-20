@@ -1,4 +1,4 @@
-
+# Modified from https://github.com/SungMinCho/MEANTIME/blob/master/meantime/dataloaders/base.py
 
 from abc import *
 from pathlib import Path
