@@ -1,3 +1,4 @@
+# modified from https://github.com/SungMinCho/MEANTIME/blob/master/meantime/dataloaders/base.py
 
 from .negative_samplers import negative_sampler_factory
 
