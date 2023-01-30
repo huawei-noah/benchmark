@@ -1,11 +1,18 @@
-# Copyright (C) 2021. Huawei Technologies Co., Ltd. All rights reserved.
-
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the MIT license.
-
-# This program is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE. See the MIT License for more details.
+# =========================================================================
+# Copyright (C) 2022. Huawei Technologies Co., Ltd. All rights reserved.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# =========================================================================
 
 import os
 import logging
@@ -14,6 +21,8 @@ import yaml
 import glob
 import json
 from collections import OrderedDict
+import h5py
+
 
 def load_config(config_dir, experiment_id):
     params = dict()
@@ -33,33 +42,36 @@ def load_config(config_dir, experiment_id):
         if len(found_params) == 2:
             break
     # Update base setting first so that values can be overrided when conflict 
-    # with experiment_id settings
+    # with settings in experiment_id
     params.update(found_params.get('Base', {}))
-    params.update(found_params.get(experiment_id))
-    if 'dataset_id' not in params:
-        raise RuntimeError('experiment_id={} is not valid in config.'.format(experiment_id))
+    if experiment_id in found_params:
+        params.update(found_params.get(experiment_id))
+    if experiment_id not in found_params or 'dataset_id' not in params:
+        raise RuntimeError('expid={} is not valid in config.'.format(experiment_id))
     params['model_id'] = experiment_id
     dataset_id = params['dataset_id']
     dataset_configs = glob.glob(os.path.join(config_dir, 'dataset_config.yaml'))
     if not dataset_configs:
         dataset_configs = glob.glob(os.path.join(config_dir, 'dataset_config/*.yaml'))
+    dataset_id_found = False
     for config in dataset_configs:
         with open(config, 'r') as cfg:
             config_dict = yaml.load(cfg, Loader=yaml.FullLoader)
             if dataset_id in config_dict:
                 params.update(config_dict[dataset_id])
+                dataset_id_found = True
                 break
+    assert dataset_id_found, "dataset_id={} is not found in config.".format(dataset_id)
     return params
 
 def set_logger(params):
     dataset_id = params['dataset_id']
     model_id = params['model_id']
     log_dir = os.path.join(params['model_root'], dataset_id)
-    if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
+    os.makedirs(log_dir, exist_ok=True)
     log_file = os.path.join(log_dir, model_id + '.log')
 
-    # logs may not show in the file without the two lines
+    # logs will not show in the file without the two lines.
     for handler in logging.root.handlers[:]: 
         logging.root.removeHandler(handler)
         
@@ -88,3 +100,15 @@ class Monitor(object):
         for k, v in self.kv_pairs.items():
             value += logs.get(k, 0) * v
         return value
+
+    def get_metrics(self):
+        return list(self.kv_pairs.keys())
+
+def load_h5(data_path, verbose=0):
+    if verbose == 0:
+        logging.info('Loading data from h5: ' + data_path)
+    data_dict = dict()
+    with h5py.File(data_path, 'r') as hf:
+        for key in hf.keys():
+            data_dict[key] = hf[key][:]
+    return data_dict
